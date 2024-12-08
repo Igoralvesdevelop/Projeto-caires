@@ -6,7 +6,7 @@ async function bancoDados(){
         "host":"localhost",
         "user":"root",
         "port": 3306,
-        "database":"Caires"
+        "database":"controle_de_acesso"
         })
 }
 export default {bancoDados}
