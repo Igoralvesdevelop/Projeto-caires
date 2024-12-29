@@ -12,7 +12,7 @@ create table usuarios(
     data_nascimento date DEFAULT '1970-01-01',
     genero varchar(30) DEFAULT 'Indefinido',
 	nivel_acesso varchar(13) not null,
-    deletado boolean default false
+     deletado boolean default false
 );
 
 create table moradores(
@@ -33,16 +33,15 @@ create table moradores(
 create table prestadores_servicos_cadastrados(
 	id_prestador_servico int primary key AUTO_INCREMENT not null,
 	nome varchar(60) not null,
-	cpf char(14) unique not null,
-	rg varchar(14) not null,
+	cpf char(11) unique not null,
 	uf varchar(2) not null,
 	 deletado boolean default false
 );
 
-create table prestadores_servicos(
+create table controle_prestadores(
 	id_prestador_servico int primary key AUTO_INCREMENT not null,
 	nome varchar(60) not null,
-	cpf_rg varchar(14) not null,
+	cpf char(11) not null,
 	uf varchar(2) not null,
 	apartamento varchar(5) not null,
 	bloco char(1) not null,
