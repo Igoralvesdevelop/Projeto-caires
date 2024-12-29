@@ -11,8 +11,8 @@ create table usuarios(
     telefone varchar(20) DEFAULT '(99) 9999-99999',
     data_nascimento date DEFAULT '1970-01-01',
     genero varchar(30) DEFAULT 'Indefinido',
-	imagem_usuario varchar(80) DEFAULT 'user.png',
-	nivel_acesso varchar(13) not null  
+	nivel_acesso varchar(13) not null,
+    deletado boolean default false
 );
 
 create table moradores(
@@ -20,10 +20,14 @@ create table moradores(
 	nome varchar(60) not null,
 	cpf char(14) not null unique,
 	telefone varchar(20),
+	genero varchar(30) DEFAULT 'Indefinido',
+	data_nascimento date DEFAULT '1970-01-01',
 	apartamento varchar(5) not null,
 	bloco char(1) not null,
 	senha varchar(32) not null,
-	email varchar(80) not null unique
+	email varchar(80) not null unique,
+    ramal varchar(5),
+	deletado boolean default false
 );
 
 create table prestadores_servicos_cadastrados(
@@ -31,7 +35,8 @@ create table prestadores_servicos_cadastrados(
 	nome varchar(60) not null,
 	cpf char(14) unique not null,
 	rg varchar(14) not null,
-	uf varchar(2) not null
+	uf varchar(2) not null,
+	 deletado boolean default false
 );
 
 create table prestadores_servicos(
@@ -52,7 +57,8 @@ create table visitantes_cadastrados(
 	nome varchar(60) not null,
 	cpf char(14) unique not null,
 	rg varchar(14) not null,
-	uf varchar(2) not null
+	uf varchar(2) not null,
+	 deletado boolean default false
 );
 
 create table visitantes(
@@ -71,10 +77,10 @@ create table visitantes(
 create table encomendas(
 	id_encomenda int primary key AUTO_INCREMENT not null,
 	empresa varchar(60) not null,
-	apartamento varchar(5) not null,
-	bloco char(1) not null,
 	data_entrega datetime default CURRENT_TIMESTAMP,
-    status_entrega varchar(30) not null default 'Processando'
+    fk_id_morador int not null,
+    status_entrega varchar(30) not null default 'Processando',
+	foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
 );
 
 create table eventos (
@@ -88,4 +94,12 @@ create table eventos (
 	fk_id_morador int not null,
     foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
 );
-
+create table veiculos (
+    id_veiculo int primary key AUTO_INCREMENT not null,
+    modelo varchar(50) not null,
+    placa varchar(7) not null unique,
+    cor varchar(20) not null,
+    tipo varchar(30) not null, -- Exemplo: Carro, Moto, Caminhão
+    fk_id_morador int not null, -- Relaciona com o morador
+    foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
+);
