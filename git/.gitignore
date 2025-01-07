@@ -1,0 +1,9 @@
+FUNC = funcionario
+MORA = morador
+PS = prestadores de serviços
+CPS = Controle prestadores de serviços
+VISIT = Visitantes cadastros
+VISITPER = Visitantes Permanetes
+ENCO = Encomenda
+EVENT = Eventos
+VEIC = Veiculos
