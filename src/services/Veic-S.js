@@ -16,7 +16,7 @@ async function createVeiculo(modelo, placa, cor, tipo, fk_id_morador) {
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoVeiculo);
-    connect.end;
+    connect.end;    
 }
 
 async function updateVeiculo(modelo, placa, cor, tipo, fk_id_morador, id_veiculo) {

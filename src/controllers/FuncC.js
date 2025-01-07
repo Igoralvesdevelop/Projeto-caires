@@ -1,6 +1,6 @@
 import express, {request, response} from 'express';
 
-import funcionario from "../services/Func-S.js";
+import funcionario from "../services/FuncS.js";
 
 const route = express.Router();
 route.get("/", async (request, response) =>{
