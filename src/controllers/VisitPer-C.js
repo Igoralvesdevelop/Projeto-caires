@@ -18,10 +18,10 @@ route.get("/", async (request, response) => {
 
 
 route.post("/", async (request, response) => {
-    const { nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante } = request.body;
+    const { nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador } = request.body;
 
     try {
-        await visitantes.createVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante);
+        await visitantes.createVisitante(nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador);
         return response.status(201).send({ "message": "Visitante cadastrado com sucesso" });
     } catch (error) {
         return response.status(500).send({ "message": "Erro ao cadastrar visitante", error: error.message });
@@ -30,11 +30,11 @@ route.post("/", async (request, response) => {
 
 
 route.put("/:id_visitante", async (request, response) => {
-    const { nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante } = request.body;
+    const {nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador} = request.body;
     const { id_visitante } = request.params;
 
     try {
-        await visitantes.updateVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante, id_visitante);
+        await visitantes.updateVisitante(nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador, id_visitante);
         return response.status(200).send({ "message": "Visitante atualizado com sucesso" });
     } catch (error) {
         return response.status(500).send({ "message": "Erro ao atualizar visitante", error: error.message });

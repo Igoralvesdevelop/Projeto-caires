@@ -35,7 +35,7 @@ create table prestadores_servicos_cadastrados(
 	nome varchar(60) not null,
 	cpf char(11) unique not null,
 	uf varchar(2) not null,
-	 deletado boolean default false
+	deletado boolean default false
 );
 
 create table controle_prestadores(
@@ -57,20 +57,14 @@ create table visitantes_cadastrados(
 	cpf char(14) unique not null,
 	rg varchar(14) not null,
 	uf varchar(2) not null,
-	 deletado boolean default false
-);
-
-create table visitantes(
-	id_visitante int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-	cpf_rg varchar(14) not null,
-	uf varchar(2) not null,
+    nivel_acesso enum ('Visitante Comum', 'Visitante Permanente'),
 	apartamento varchar(5) not null,
 	bloco char(1) not null,
 	data_entrada datetime default CURRENT_TIMESTAMP,
 	data_saida datetime,
-	fk_id_visitante int not null,
-    foreign key(fk_id_visitante) references visitantes_cadastrados(id_visitante) on delete cascade
+    fk_id_moradores int not null,
+    foreign key (fk_id_moradores) references moradores (id_morador) on delete cascade
+	deletado boolean default false,
 );
 
 create table encomendas(

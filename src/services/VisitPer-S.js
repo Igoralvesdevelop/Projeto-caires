@@ -10,10 +10,10 @@ async function listVisitantes() {
 }
 
 
-async function createVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante) {
-    const sql = 'INSERT INTO visitantes(nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante) VALUES (?, ?, ?, ?, ?, ?)';
+async function createVisitante(nome, cpf, rg, uf,nivel_acesso, apartamento, bloco, data_entrada , data_saida, fk_id_morador) {
+    const sql = 'INSERT INTO visitantes_cadastrados(nome, cpf, rg, uf, nivel_acesso, apartamento, bloco,data_entrada,  data_saida, fk_id_morador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-    const infoVisitante = [nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante];
+    const infoVisitante = [nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoVisitante);
@@ -21,10 +21,10 @@ async function createVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visit
 }
 
 
-async function updateVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante, id_visitante) {
-    const sql = 'UPDATE visitantes SET nome = ?, cpf_rg = ?, uf = ?, apartamento = ?, bloco = ?, fk_id_visitante = ? WHERE id_visitante = ?';
+async function updateVisitante(nome, cpf, rg, uf,nivel_acesso, apartamento, bloco, data_entrada , data_saida, fk_id_morador) {
+    const sql = 'UPDATE visitantes_cadastrados SET nome = ?, cpf = ?, rg = ?, uf = ?, nivel_acesso = ? apartamento = ?, bloco = ?, data_entrada = ?, data_saida, fk_id_morador= ?  WHERE id_visitante = ?';
 
-    const infoVisitante = [nome, cpf_rg, uf, apartamento, bloco, fk_id_visitante, id_visitante];
+    const infoVisitante = [nome, cpf, rg, uf,nivel_acesso, apartamento, bloco, data_entrada , data_saida, fk_id_morador];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoVisitante);
@@ -32,7 +32,7 @@ async function updateVisitante(nome, cpf_rg, uf, apartamento, bloco, fk_id_visit
 }
 
 async function updateDataSaida(id_visitante) {
-    const sql = 'UPDATE visitantes SET data_saida = CURRENT_TIMESTAMP WHERE id_visitante = ?';
+    const sql = 'UPDATE visitantes_cadastrados SET data_saida = CURRENT_TIMESTAMP WHERE id_visitante = ?';
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, [id_visitante]);
@@ -40,7 +40,7 @@ async function updateDataSaida(id_visitante) {
 }
 
 async function deleteVisitante(id_visitante) {
-    const sql = 'UPDATE visitantes SET deletado = 1 WHERE id_visitante = ?';
+    const sql = 'UPDATE visitantes_cadastrados SET deletado = 1 WHERE id_visitante = ?';
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, [id_visitante]);
