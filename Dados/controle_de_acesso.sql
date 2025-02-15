@@ -5,14 +5,14 @@ use controle_de_acesso;
 create table usuarios(
 	id_usuario int primary key AUTO_INCREMENT not null,
 	nome varchar(60) not null,
-	email varchar(80) not null unique,
+    email varchar(80) not null unique,
 	cpf char(14) not null unique,
     senha varchar(32) not null,
     telefone varchar(20) DEFAULT '(99) 9999-99999',
     data_nascimento date DEFAULT '1970-01-01',
     genero varchar(30) DEFAULT 'Indefinido',
 	nivel_acesso varchar(13) not null,
-     deletado boolean default false
+	deletado boolean default false
 );
 
 create table moradores(
@@ -58,13 +58,13 @@ create table visitantes_cadastrados(
 	rg varchar(14) not null,
 	uf varchar(2) not null,
     nivel_acesso enum ('Visitante Comum', 'Visitante Permanente'),
+	deletado boolean default false,
 	apartamento varchar(5) not null,
 	bloco char(1) not null,
 	data_entrada datetime default CURRENT_TIMESTAMP,
 	data_saida datetime,
     fk_id_moradores int not null,
     foreign key (fk_id_moradores) references moradores (id_morador) on delete cascade
-	deletado boolean default false,
 );
 
 create table encomendas(
@@ -80,6 +80,8 @@ create table eventos (
     id_evento int primary key AUTO_INCREMENT not null,
 	cpf char(14) not null,
     titulo_evento varchar(60) not null,
+    descricao_evento varchar(60)not null,
+	tipo ENUM('evento', 'comunicado') NOT NULL,
     inicio_evento datetime not null,
     fim_evento datetime not null,
 	cor varchar(10) not null,
@@ -92,7 +94,7 @@ create table veiculos (
     modelo varchar(50) not null,
     placa varchar(7) not null unique,
     cor varchar(20) not null,
-    tipo varchar(30) not null, -- Exemplo: Carro, Moto, Caminhão
-    fk_id_morador int not null, -- Relaciona com o morador
+    tipo varchar(30) not null, 
+    fk_id_morador int not null,
     foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
 );

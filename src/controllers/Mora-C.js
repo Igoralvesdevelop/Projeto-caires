@@ -1,5 +1,5 @@
 import express, {request, response} from 'express';
-
+import { validarCPF } from '../Funçoes/funcoesl.js';
 import moradores from "../services/Mora-S.js";
 
 const route = express.Router();
@@ -12,18 +12,37 @@ route.get("/", async (request, response) =>{
 })
 route.post("/", async (request, response) =>{
     const {nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal} = request.body;
-
+    if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+    
+    if(senha.length < 8){
+        return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
+    }
     await moradores.CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal )
-
+    
     return response.status(201).send({"message": "Morador cadastrado"})
 })
 route.put("/:id_morador", async (request, response)=>{
 
     const {nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal} = request.body;
     const {id_morador} = request.params;
+    if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+    
+    if(senha.length < 8){
+    return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
+    }
+    await moradores.CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador )
 
-    await moradores.UpdateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal, id_morador)
-    return response.status(201).send({"message": "Morador Atulizado"})
+    return response.status(201).send({"message": "Morador cadastrado"})
 })
 
 route.delete("/:id_morador", async (request, response)=>{

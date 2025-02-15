@@ -9,20 +9,20 @@ async function listEventos() {
     return rows;
 }
 
-async function createEvento(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) {
-    const sql = 'INSERT INTO eventos(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) VALUES (?, ?, ?, ?, ?, ?, ?)';
+async function createEvento(cpf, titulo_evento, descricao_evento,tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) {
+    const sql = 'INSERT INTO eventos(cpf, titulo_evento, descricao_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
-    const infoEvento = [cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador];
+    const infoEvento = [cpf, titulo_evento,descricao_evento,tipo ,inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoEvento);
     connect.end;
 }
 
-async function updateEvento(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador, id_evento) {
+async function updateEvento(cpf, titulo_evento, descricao_evento,tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) {
     const sql = 'UPDATE eventos SET cpf = ?, titulo_evento = ?, inicio_evento = ?, fim_evento = ?, cor = ?, status_pagamento = ?, fk_id_morador = ? WHERE id_evento = ?';
 
-    const infoEvento = [cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador, id_evento];
+    const infoEvento = [cpf, titulo_evento, descricao_evento,tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoEvento);

@@ -12,7 +12,7 @@ async function listMorador() {
         console.error("Erro ao listar moradores:", err.message);
         throw new Error("Erro ao acessar o banco de dados.");
     } finally {
-        if (connect) connect.end(); // Garante o encerramento da conexão
+        if (connect) connect.end(); 
     }
 }
 
@@ -35,7 +35,7 @@ async function CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartam
             throw new Error("Erro ao criar morador no banco de dados.");
         }
     } finally {
-        if (connect) connect.end(); // Garante o encerramento da conexão
+        if (connect) connect.end();
     }
 }
 
@@ -56,7 +56,7 @@ async function UpdateMorador(nome, cpf, telefone, genero, dt_nascimento, apartam
         console.error("Erro ao atualizar morador:", err.message);
         throw new Error("Erro ao atualizar morador no banco de dados.");
     } finally {
-        if (connect) connect.end(); // Garante o encerramento da conexão
+        if (connect) connect.end(); 
     }
 }
 
@@ -75,7 +75,7 @@ async function DeleteMoradores(id_morador) {
         console.error("Erro ao deletar morador:", err.message);
         throw new Error("Erro ao deletar morador no banco de dados.");
     } finally {
-        if (connect) connect.end(); // Garante o encerramento da conexão
+        if (connect) connect.end(); 
     }
 }
 
