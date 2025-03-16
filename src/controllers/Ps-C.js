@@ -14,7 +14,13 @@ route.get("/", async (request, response) => {
 
 route.post("/", async (request, response) => {
     const { nome, cpf, uf } = request.body;
-
+    if(!nome || !cpf || !uf){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+    
     await prestadores.createPrestadorCadastrado(nome, cpf, uf);
 
     return response.status(201).send({ "message": "Prestador cadastrado com sucesso" });
@@ -23,7 +29,13 @@ route.post("/", async (request, response) => {
 route.put("/:id_prestador_servico", async (request, response) => {
     const { nome, cpf, rg, uf } = request.body;
     const { id_prestador_servico } = request.params;
-
+    if(!nome || !cpf || !uf){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+    
     await prestadores.updatePrestadorCadastrado(nome, cpf, uf, id_prestador_servico);
     return response.status(200).send({ "message": "Prestador atualizado com sucesso" });
 });

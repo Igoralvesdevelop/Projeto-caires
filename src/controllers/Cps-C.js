@@ -15,6 +15,13 @@ route.get("/", async (request, response) => {
 route.post("/", async (request, response) => {
     const { nome, cpf, uf, apartamento, bloco, data_entrada, data_saida, fk_id_prestador_servico } = request.body;
 
+     if(!nome || !cpf || !uf || !apartamento || !bloco || !data_entrada || !data_saida || !fk_id_prestador_servico ){
+            return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
+        if (!validarCPF(cpf)) {
+            return response.status(400).send({ message: "CPF inválido" });
+        }
+
     await controlePrestadores.createControlePrestador(nome, cpf, uf, apartamento, bloco, data_entrada, data_saida, fk_id_prestador_servico);
 
     return response.status(201).send({ "message": "Controle de prestador cadastrado com sucesso" });
@@ -24,6 +31,13 @@ route.post("/", async (request, response) => {
 route.put("/:id_prestador_servico", async (request, response) => {
     const { nome, cpf, uf, apartamento, bloco, data_entrada, data_saida, fk_id_prestador_servico } = request.body;
     const { id_prestador_servico } = request.params;
+
+    if(!nome || !cpf || !uf || !apartamento || !bloco || !data_entrada || !data_saida || !fk_id_prestador_servico ){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
 
     await controlePrestadores.updateControlePrestador(nome, cpf, uf, apartamento, bloco, data_entrada, data_saida, fk_id_prestador_servico, id_prestador_servico);
 

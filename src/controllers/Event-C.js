@@ -15,7 +15,12 @@ route.get("/", async (request, response) => {
 
 route.post("/", async (request, response) => {
     const { cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador } = request.body;
-
+        if(!cpf || !titulo_evento || !inicio_evento || !fim_evento || !cor || !status_pagamento || !fk_id_morador){
+            return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
+        if (!validarCPF(cpf)) {
+            return response.status(400).send({ message: "CPF inválido" });
+        }
     await eventos.createEvento(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador);
 
     return response.status(201).send({ "message": "Evento cadastrado com sucesso" });
@@ -24,6 +29,13 @@ route.post("/", async (request, response) => {
 route.put("/:id_evento", async (request, response) => {
     const { cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador } = request.body;
     const { id_evento } = request.params;
+    
+    if(!cpf || !titulo_evento || !inicio_evento || !fim_evento || !cor || !status_pagamento || !fk_id_morador){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
 
     await eventos.updateEvento(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador, id_evento);
 

@@ -18,6 +18,17 @@ route.post("/", async (request, response) => {
     const { nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso } = request.body;
 
     try {
+    if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acessol){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+    if (!validarCPF(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+    
+    if(senha.length < 8){
+        return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
+    }
+        
         // Chama a função para criar o funcionário
         await funcionario.CreateUsuario(nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso);
 
@@ -34,6 +45,16 @@ route.put("/:id_usuario", async (request, response) => {
     const { id_usuario } = request.params;
 
     try {
+        if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acessol){
+            return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
+        if (!validarCPF(cpf)) {
+            return response.status(400).send({ message: "CPF inválido" });
+        }
+        
+        if(senha.length < 8){
+            return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
+        }
         await funcionario.UpdateUsuario(nome, email, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, id_usuario);
         return response.status(200).send({ "message": "Funcionário atualizado com sucesso!" });
     } catch (error) {

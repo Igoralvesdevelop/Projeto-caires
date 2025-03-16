@@ -21,6 +21,12 @@ route.post("/", async (request, response) => {
     const { nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador } = request.body;
 
     try {
+        if(!nome || !cpf || !rg || !uf || !nivel_acesso || !apartamento || !bloco || !data_entrada || !data_entrada || !fk_id_morador){
+                return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+            }
+            if (!validarCPF(cpf)) {
+                return response.status(400).send({ message: "CPF inválido" });
+            }
         await visitantes.createVisitante(nome, cpf, rg, uf, nivel_acesso, apartamento, bloco, data_entrada, data_saida, fk_id_morador);
         return response.status(201).send({ "message": "Visitante cadastrado com sucesso" });
     } catch (error) {
@@ -46,6 +52,13 @@ route.put("/saida/:id_visitante", async (request, response) => {
     const { id_visitante } = request.params;
 
     try {
+        if(!nome || !cpf || !rg || !uf || !nivel_acesso || !apartamento || !bloco || !data_entrada || !data_entrada || !fk_id_morador){
+            return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
+        if (!validarCPF(cpf)) {
+            return response.status(400).send({ message: "CPF inválido" });
+        }
+        
         await visitantes.updateDataSaida(id_visitante);
         return response.status(200).send({ "message": "Saída do visitante registrada com sucesso" });
     } catch (error) {

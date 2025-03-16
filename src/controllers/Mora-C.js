@@ -30,6 +30,7 @@ route.put("/:id_morador", async (request, response)=>{
 
     const {nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal} = request.body;
     const {id_morador} = request.params;
+    
     if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
@@ -40,9 +41,9 @@ route.put("/:id_morador", async (request, response)=>{
     if(senha.length < 8){
     return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
     }
-    await moradores.CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador )
+    await moradores.UpdateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador )
 
-    return response.status(201).send({"message": "Morador cadastrado"})
+    return response.status(201).send({"message": "Morador atualizado com sucesso"})
 })
 
 route.delete("/:id_morador", async (request, response)=>{

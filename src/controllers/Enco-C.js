@@ -16,6 +16,10 @@ route.get("/", async (request, response) => {
 route.post("/", async (request, response) => {
     const { empresa, data_entrega, fk_id_morador, status_entrega } = request.body;
 
+    if(!empresa || !data_entrega || !fk_id_morador || !status_entrega){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
+
     await encomendas.createEncomenda(empresa, data_entrega, fk_id_morador, status_entrega);
 
     return response.status(201).send({ "message": "Encomenda cadastrada com sucesso" });
@@ -25,6 +29,10 @@ route.post("/", async (request, response) => {
 route.put("/:id_encomenda", async (request, response) => {
     const { empresa, data_entrega, fk_id_morador, status_entrega } = request.body;
     const { id_encomenda } = request.params;
+
+    if(!empresa || !data_entrega || !fk_id_morador || !status_entrega){
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+        }
 
     await encomendas.updateEncomenda(empresa, data_entrega, fk_id_morador, status_entrega, id_encomenda);
 
