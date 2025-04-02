@@ -12,7 +12,9 @@ create table usuarios(
     data_nascimento date DEFAULT '1970-01-01',
     genero varchar(30) DEFAULT 'Indefinido',
 	nivel_acesso varchar(13) not null,
-	deletado boolean default false
+	deletado boolean default false,
+	cnpj_condominio varchar(14) not null unique,
+	foreign key (cnpj_condominio) references (cnpj) on delete cascade
 );
 
 create table moradores(
@@ -97,4 +99,13 @@ create table veiculos (
     tipo varchar(30) not null, 
     fk_id_morador int not null,
     foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
+);
+
+create table condominio(
+	id_condomiio int primary key AUTO_INCREMENT,
+	numero_bloco int,
+	numero_unidades int,
+	ramal int,
+	cep varchar(9),
+	cnpj varchar(14) not null unique,
 );
