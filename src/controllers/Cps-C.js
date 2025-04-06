@@ -11,7 +11,6 @@ route.get("/", async (request, response) => {
     return response.status(200).send({ "message": prestadores });
 });
 
-
 route.post("/", async (request, response) => {
     const { nome, cpf, uf, apartamento, bloco, data_entrada, data_saida, fk_id_prestador_servico } = request.body;
 

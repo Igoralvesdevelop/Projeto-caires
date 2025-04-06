@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 
 async function bancoDados(){
     return await mysql.createConnection({
-        "password":"neto12512y",
+        "password":"Xenover$e1",
         "host":"localhost",
         "user":"root",
         "port": 3306,

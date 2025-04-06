@@ -20,7 +20,7 @@ routes.use('/veiculo', veiculoController);
 routes.use('/visitantes', visitanteController);
 routes.use('/encomendas', encomendasController);
 routes.use('/eventos', eventosController);
-routes.use('/controlPS', PSController);
+routes.use('/prestador-de-servico', PSController);
 routes.use('/loginFunciorario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
 //Exportando rotas
