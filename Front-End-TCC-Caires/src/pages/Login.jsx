@@ -25,16 +25,23 @@ function Cadastro() {
         },
         body: JSON.stringify(login)
       });
-
+  
       const respJSON = await response.json();
       console.log("RESPOSTA:", respJSON);
-
-      navigate("/Telainicial");
-
+  
+      if (response.status === 200) {
+        
+        navigate("/Telainicial");
+      } else {
+        
+        alert(respJSON.message || "Email ou senha incorretos.");
+      }
     } catch (error) {
       console.log("ERRO:", error);
+      alert("Erro ao conectar com o servidor.");
     }
   }
+  
 
   const submit = async (event) => {
     event.preventDefault();
