@@ -38,5 +38,8 @@ async function deletePrestadorCadastrado(id_prestador_servico) {
 }
 
 export default {
-
-    listPrestadoresCadastrados, createPrestadorCadastrado,updatePrestadorCadastrado,deletePrestadorCadastrado}
+    listPrestadoresCadastrados, 
+    createPrestadorCadastrado,
+    updatePrestadorCadastrado,
+    deletePrestadorCadastrado
+}

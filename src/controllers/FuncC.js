@@ -18,7 +18,7 @@ route.post("/", async (request, response) => {
     const { nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso } = request.body;
 
     try {
-    if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acessol){
+    if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acesso){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
     if (!validarCPF(cpf)) {
@@ -45,7 +45,7 @@ route.put("/:id_usuario", async (request, response) => {
     const { id_usuario } = request.params;
 
     try {
-        if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acessol){
+        if(!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acesso){
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
         }
         if (!validarCPF(cpf)) {

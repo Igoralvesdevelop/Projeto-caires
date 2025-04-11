@@ -1,111 +1,124 @@
-drop database if exists controle_de_acesso;
-create database if not exists controle_de_acesso;
-use controle_de_acesso;
+DROP DATABASE IF EXISTS controle_de_acesso;
+CREATE DATABASE controle_de_acesso;
+USE controle_de_acesso;
 
-create table usuarios(
-	id_usuario int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-    email varchar(80) not null unique,
-	cpf char(14) not null unique,
-    senha varchar(32) not null,
-    telefone varchar(20) DEFAULT '(99) 9999-99999',
-    data_nascimento date DEFAULT '1970-01-01',
-    genero varchar(30) DEFAULT 'Indefinido',
-	nivel_acesso varchar(13) not null,
-	deletado boolean default false,
-	cnpj_condominio varchar(14) not null unique,
-	foreign key (cnpj_condominio) references (cnpj) on delete cascade
+CREATE TABLE usuarios (
+	id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	email VARCHAR(80) NOT NULL UNIQUE,
+	cpf CHAR(14) NOT NULL UNIQUE,
+    senha VARCHAR(60) NOT NULL,
+    telefone VARCHAR(20) DEFAULT '(99) 9999-99999',
+    data_nascimento DATE DEFAULT '1970-01-01',
+    genero VARCHAR(30) DEFAULT 'Indefinido',
+	nivel_acesso ENUM('Sindico', 'Funcionario') NOT NULL,
+    deletado BOOLEAN DEFAULT FALSE
 );
 
-create table moradores(
-	id_morador int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-	cpf char(14) not null unique,
-	telefone varchar(20),
-	genero varchar(30) DEFAULT 'Indefinido',
-	data_nascimento date DEFAULT '1970-01-01',
-	apartamento varchar(5) not null,
-	bloco char(1) not null,
-	senha varchar(32) not null,
-	email varchar(80) not null unique,
-    ramal varchar(5),
-	deletado boolean default false
+CREATE TABLE moradores (
+	id_morador INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	cpf CHAR(14) NOT NULL UNIQUE,
+	telefone VARCHAR(20),
+	genero VARCHAR(30) DEFAULT 'Indefinido',
+	data_nascimento DATE DEFAULT '1970-01-01',
+	apartamento VARCHAR(5) NOT NULL,
+	bloco CHAR(1) NOT NULL,
+	senha VARCHAR(60) NOT NULL,
+	email VARCHAR(80) NOT NULL UNIQUE,
+    ramal VARCHAR(5),
+	deletado BOOLEAN DEFAULT FALSE,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table prestadores_servicos_cadastrados(
-	id_prestador_servico int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-	cpf char(11) unique not null,
-	uf varchar(2) not null,
-	deletado boolean default false
+CREATE TABLE prestadores_servicos_cadastrados (
+	id_prestador_servico INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	cpf CHAR(14) NOT NULL UNIQUE,
+	uf VARCHAR(2) NOT NULL,
+	deletado BOOLEAN DEFAULT FALSE,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table controle_prestadores(
-	id_prestador_servico int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-	cpf char(11) not null,
-	uf varchar(2) not null,
-	apartamento varchar(5) not null,
-	bloco char(1) not null,
-	data_entrada datetime default CURRENT_TIMESTAMP,
-	data_saida datetime,
-	fk_id_prestador_servico int not null,
-    foreign key(fk_id_prestador_servico) references prestadores_servicos_cadastrados(id_prestador_servico) on delete cascade
+CREATE TABLE controle_prestadores (
+	id_controle_prestador INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	cpf CHAR(14) NOT NULL,
+	uf VARCHAR(2) NOT NULL,
+	apartamento VARCHAR(5) NOT NULL,
+	bloco CHAR(1) NOT NULL,
+	data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+	data_saida DATETIME,
+	fk_id_prestador_servico INT NOT NULL,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_prestador_servico) REFERENCES prestadores_servicos_cadastrados(id_prestador_servico) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table visitantes_cadastrados(
-	id_visitante int primary key AUTO_INCREMENT not null,
-	nome varchar(60) not null,
-	cpf char(14) unique not null,
-	rg varchar(14) not null,
-	uf varchar(2) not null,
-    nivel_acesso enum ('Visitante Comum', 'Visitante Permanente'),
-	deletado boolean default false,
-	apartamento varchar(5) not null,
-	bloco char(1) not null,
-	data_entrada datetime default CURRENT_TIMESTAMP,
-	data_saida datetime,
-    fk_id_moradores int not null,
-    foreign key (fk_id_moradores) references moradores (id_morador) on delete cascade
+CREATE TABLE visitantes_cadastrados (
+	id_visitante INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(60) NOT NULL,
+	cpf CHAR(14) NOT NULL UNIQUE,
+	rg VARCHAR(14) NOT NULL,
+	uf VARCHAR(2) NOT NULL,
+    nivel_acesso ENUM('Visitante Comum', 'Visitante Permanente'),
+	deletado BOOLEAN DEFAULT FALSE,
+	apartamento VARCHAR(5) NOT NULL,
+	bloco CHAR(1) NOT NULL,
+	data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+	data_saida DATETIME,
+    fk_id_moradores INT NOT NULL,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_moradores) REFERENCES moradores(id_morador) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table encomendas(
-	id_encomenda int primary key AUTO_INCREMENT not null,
-	empresa varchar(60) not null,
-	data_entrega datetime default CURRENT_TIMESTAMP,
-    fk_id_morador int not null,
-    status_entrega varchar(30) not null default 'Processando',
-	foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
+CREATE TABLE encomendas (
+	id_encomenda INT PRIMARY KEY AUTO_INCREMENT,
+	empresa VARCHAR(60) NOT NULL,
+	data_entrega DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fk_id_morador INT NOT NULL,
+    status_entrega VARCHAR(30) NOT NULL DEFAULT 'Processando',
+    fk_id_usuario INT,
+	FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table eventos (
-    id_evento int primary key AUTO_INCREMENT not null,
-	cpf char(14) not null,
-    titulo_evento varchar(60) not null,
-    descricao_evento varchar(60)not null,
-	tipo ENUM('evento', 'comunicado') NOT NULL,
-    inicio_evento datetime not null,
-    fim_evento datetime not null,
-	cor varchar(10) not null,
-	status_pagamento varchar(20) not null default 'Pendente', 
-	fk_id_morador int not null,
-    foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
-);
-create table veiculos (
-    id_veiculo int primary key AUTO_INCREMENT not null,
-    modelo varchar(50) not null,
-    placa varchar(7) not null unique,
-    cor varchar(20) not null,
-    tipo varchar(30) not null, 
-    fk_id_morador int not null,
-    foreign key(fk_id_morador) references moradores(id_morador) on delete cascade
+CREATE TABLE eventos (
+    id_evento INT PRIMARY KEY AUTO_INCREMENT,
+	cpf CHAR(14) NOT NULL,
+    titulo_evento VARCHAR(60) NOT NULL,
+    inicio_evento DATETIME NOT NULL,
+    fim_evento DATETIME NOT NULL,
+	cor VARCHAR(10) NOT NULL,
+	status_pagamento VARCHAR(20) NOT NULL DEFAULT 'Pendente',
+	fk_id_morador INT NOT NULL,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-create table condominio(
-	id_condomiio int primary key AUTO_INCREMENT,
-	numero_bloco int,
-	numero_unidades int,
-	ramal int,
-	cep varchar(9),
-	cnpj varchar(14) not null unique,
+CREATE TABLE veiculos (
+    id_veiculo INT PRIMARY KEY AUTO_INCREMENT,
+    modelo VARCHAR(50) NOT NULL,
+    placa VARCHAR(7) NOT NULL UNIQUE,
+    cor VARCHAR(20) NOT NULL,
+    tipo_veiculo VARCHAR(30) NOT NULL,
+    fk_id_morador INT NOT NULL,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
+);
+
+CREATE TABLE relatorios (
+    id_relatorio INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tipo_relatorio ENUM('Visitantes', 'Moradores', 'Encomendas', 'Veículos', 'Eventos', 'Prestadores') NOT NULL,
+    filtros_utilizados TEXT,
+    fk_id_usuario INT,
+    FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
