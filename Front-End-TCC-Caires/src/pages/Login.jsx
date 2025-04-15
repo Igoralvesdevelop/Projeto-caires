@@ -7,33 +7,27 @@ import { useNavigate } from "react-router-dom";
 
 function Cadastro() {
   const navigate = useNavigate();
-  const [login, setLogin] = useState({ email: "", senha: "" });
+  const [email , setEmail] = useState("");
+  const [password , setPassword] = useState("");
 
-  function handlerLogin(event) {
-    setLogin({ ...login, [event.target.name]: event.target.value });
-  }
-
-  async function realizarLogin(login) {
+  async function realizarLogin() {
     try {
-      const response = await fetch("http://localhost:3333/loginFunciorario", {
+      const response = await fetch("http://localhost:3333/loginFuncionario", {
         method: "POST",
         mode: "cors",
+         allowedHeaders: 'Content-Type',
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "*"
         },
-        body: JSON.stringify(login)
+        body: JSON.stringify({ email, senha: password })
       });
-  
+
       const respJSON = await response.json();
       console.log("RESPOSTA:", respJSON);
-  
+
       if (response.status === 200) {
-        
         navigate("/Telainicial");
       } else {
-        
         alert(respJSON.message || "Email ou senha incorretos.");
       }
     } catch (error) {
@@ -41,11 +35,10 @@ function Cadastro() {
       alert("Erro ao conectar com o servidor.");
     }
   }
-  
 
   const submit = async (event) => {
-    event.preventDefault();
-    await realizarLogin(login);
+    event.preventDefault();  
+    await realizarLogin();
   };
 
   const Cadastre = () => {
@@ -87,7 +80,7 @@ function Cadastro() {
               className="input-field-cad"
               placeholder="Email:"
               name="email"
-              onChange={handlerLogin}
+              onChange={(e) => setEmail(e.target.value)} 
               required
             />
           </div>
@@ -99,7 +92,7 @@ function Cadastro() {
               className="input-field-cad"
               placeholder="Senha:"
               name="senha"
-              onChange={handlerLogin}
+              onChange={(e) => setPassword(e.target.value)} 
               required
             />
           </div>

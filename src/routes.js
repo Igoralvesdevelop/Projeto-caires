@@ -21,7 +21,7 @@ routes.use('/visitantes', visitanteController);
 routes.use('/encomendas', encomendasController);
 routes.use('/eventos', eventosController);
 routes.use('/controlPS', PSController);
-routes.use('/loginFunciorario', LoginFuncionarioController);
+routes.use('/loginFuncionario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
 //Exportando rotas
 export default routes;
