@@ -1,0 +1,37 @@
+.dropdown-options input[type="radio"] {
+    appearance: none; 
+    width: 20px; 
+    height: 20px; 
+    border: 2px solid #000;
+    border-radius: 50%; 
+    background-color: #fff; 
+    cursor: pointer; 
+    display: inline-block; 
+    transition: background-color 0.2s, transform 0.2s; 
+    flex-direction: row;
+  }
+  
+  .dropdown-options input[type="radio"]:checked {
+    background-color: #000; 
+  }
+  
+  .dropdown-options {
+    display: flex; 
+    gap: 10px; 
+  }
+  
+  .dropdown-options label {
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+  }
+  ul {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+  
+  li {
+    list-style: none; 
+  }
+  

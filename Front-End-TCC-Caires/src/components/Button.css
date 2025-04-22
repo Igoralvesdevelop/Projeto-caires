@@ -1,0 +1,23 @@
+.custom-button-cad3 {
+    background-color: #ffffff; 
+    border: 2px solid #000; 
+    border-radius: 30px; 
+    min-height: 50px; 
+    color: #000; 
+    font-family: 'Arial', sans-serif; 
+    font-size: 16px; 
+    font-weight: 500; 
+    padding: 10px 20px; 
+    width: 100%; 
+    cursor: pointer; 
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.custom-button-cad3:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+}
+
+.custom-button-cad3:active {
+    transform: scale(0.95); 
+}

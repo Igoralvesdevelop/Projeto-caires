@@ -1,15 +1,14 @@
-import { useNavigate } from "react-router-dom";
+// src/components/Button.jsx
+import React from "react";
+import "./Button.css";
 
-function Botão () {
-    const navigate = useNavigate();
+const Button = ({ text, onClick }) => {
+  return (
+    <button className="custom-button-cad3" onClick={onClick}>
+      {text}
+    </button>
+  );
+};
 
-    const handleClick = () => {
-        navigate('/Fuciocondo');
-    };
+export default Button;
 
-    return (
-        <button onClick={handleClick}>Ir</button>
-    );
-}
-
-export default Botão;

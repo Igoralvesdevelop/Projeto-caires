@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 .container {
   display: flex;
   flex-direction: row;
@@ -61,27 +63,33 @@
   align-items: center;
 }
 
-.input-cad1,
-.input1-cad {
-  width: 100%;
-  padding: 20px;
-  border-radius: 5px;
-  border-color: #f5f5f5;
-  font-size: 1vw;
-  display: flex;
-  flex-direction: row;
+.input1-cad, .input-cad1 {
+  display: flex; 
+  align-items: center; 
+  background-color: #f5f5f5; 
+  border:  #ccc; 
+  border-radius: 5px; 
+  padding: 10px; 
+  width: 89%; 
   gap: 10px;
-  justify-content: space-around;
+  justify-content:center;
+  flex-direction: row;
 }
 
 .input-field-cad {
-  width: 70%;
-  padding: 15px; /* Espaço para o ícone */
-  padding-left: 50px;
-  border-radius: 5px;
-  font-size: 1vw;
-
+  flex: 1; 
+  border: 2px solid #f5f5f5; 
+  opacity: 50%;
+  background-color: transparent; 
+  padding-left: 40px; 
+  font-size: 16px; 
 }
+
+.icon-password,.icon-email {
+  font-size: 20px; 
+  color: black; 
+}
+
 
 .login-cad {
   color: #195ca8;
@@ -96,12 +104,18 @@
   text-align: left; /* Alinha o texto à esquerda */
   /* margin-left: 12em;
   margin-top: -36%; */
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
 }
 
+
 .text2-cad{
-  font-size: 2.5vw;
-  font-weight:bold;
+  font-size: 2vw;
   color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
 }
 
 .text1-cad{
@@ -112,8 +126,10 @@
   align-items: center;
   flex: 0.5;
   color: #ffffff;
-  font-size: 1.8vw;
-
+  font-size: 1.2vw;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .custom-button-cad {
@@ -125,7 +141,7 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1.2vw;
   font-weight: 500;
-  padding: 4%; /* Ajusta o espaço interno do botão */
+  padding: 4%; 
   width: 100%;
 }
 
@@ -139,6 +155,15 @@
   height: auto;
 }
 
+
+
+
+.div-button2{
+  flex: 0.5;
+  width: 30%;
+}
+
+
 .custom-button-cad1 {
   background-color: transparent;
   border: 2px solid #000;
@@ -148,19 +173,21 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 1.2vw;
   font-weight: 500;
-  padding: 4%; /* Ajusta o espaço interno do botão */
+  padding: 4%; 
   width: 100%;
 }
 .icon-email {
   font-size: 20px;
   position:relative;
-  left: 1vw;
+  left: 2.5vw;
 }
 
 .icon-password {
   position:relative;
-
+  left: 2.5vw;
 }
+
+
 
 .login-div{
   flex: 1.5;
@@ -169,10 +196,7 @@
 
 }
 
-.div-button2{
-  flex: 1;
-  width: 30%;
-}
+
 .buput{
   flex: 1;
   display: flex;
@@ -180,9 +204,17 @@
   justify-content: space-evenly;
   gap: 30px;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
+  padding: 80px;
 }
 
 .img-cad {
-  font-size:10vw;
+  width: 40%; 
+  height: auto; 
+  max-width: 300px;
+
 }
+
+
+
+

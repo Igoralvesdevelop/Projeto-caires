@@ -1,55 +1,62 @@
-import './Funciocondo.css'
+import "./Funciocondo.css";
 import caires from "../assets/caires.png";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { FaUserTie } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
-
-
-
+import { useNavigate } from "react-router-dom";
 
 function Funciocondo() {
-    
   const navigate = useNavigate();
 
   const Entre = () => {
-      navigate('/Login');
+    navigate("/");
   };
 
   const Condominio = () => {
-    navigate('/Cadaminion');
-};
+    navigate("/Cadaminion");
+  };
 
-const Funcionario = () => {
-  navigate('/Cadanario');
-};
+  const Funcionario = () => {
+    navigate("/Cadanario");
+  };
 
-  
-    
-return (
-    <>
-         <div className='box-funco'>
-           <div className='rectangle-funco'>
-           <div className="rectangle1-funco" />
-           <div className="rectangle2-funco" />
-           <div className="text-funco">Você já tem Conta?</div>
-           <div className="text1-funco">Bem-vindo ao <br></br>Caires!</div>
-           <div className="text2-funco" onClick={Entre}>ENTRE.</div>
-            <img src={caires} alt="Logo" className="img-funco"/>
+  return (
+    <div class="container">
+      <div class="left-side">
+        <div class="content-1">
+          <img src={caires} alt="Logo" className="img-cad" />
+        </div>
 
-            <button className="funcionario"  onClick={Funcionario}>FUNCIONÁRIO</button>
-            <FaUserTie  size={40}  color="black" className="icon-func" />
+        <div class="content-2">
+          <div className="div-a">
+            <h1 className="text2-cad">
+              Bem-vindo ao <br></br>Caires!
+            </h1>{" "}
+          </div>
+          <div className="content2">
+            <div className="text-cad1">Você já tem Conta?</div>
+            <div className="diva">
+              <h1 className="text-cad" onClick={Entre}>
+                ENTRE.
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="right-side">
+        <div className="fc">
+          <button className="funio" onClick={Funcionario}>
+            <FaUserTie size={30} className="icon-func" /> FUNCIONÁRIO
+          </button>
 
-            <button className="condominio"  onClick={Condominio}>CONDOMÍNIO</button>
-            <HiOutlineBuildingOffice2 size={40}  color="black" className="icon-apt" />
+          <button className="funio" onClick={Condominio}>
+            <HiOutlineBuildingOffice2 size={30} className="icon-apt" />{" "}
+            CONDOMÍNIO
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-
-          
-           
-             </div>
-           </div>
-       </>
-     )
-   }
-
-export default Funciocondo
+export default Funciocondo;

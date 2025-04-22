@@ -1,21 +1,21 @@
-import "./Cadaminion.css";
 import Title from "../components/Title";
-import SelectComponent from "../components/SelectComponent";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
-function Cadaminion() {
+function PrestadoresC() {
   const navigate = useNavigate();
 
-  const handleClicks = () => {
+  const handleClick = () => {
     navigate("/Funciocondo");
   };
   return (
     <div class="container teste">
       <div class="other-side">
         <div class="contente-1">
-          <Title>Adicionar um novo Condomínio:</Title>
-          <div class="photo-circle"></div>
+        <Title>Adicionar um novo Prestador de serviço:</Title>
+        <div class="photo-circle">
+        </div>
+
         </div>
       </div>
 
@@ -26,65 +26,65 @@ function Cadaminion() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu nome"
-            />
-          </div>
-
-          <div className="input-container">
-            <Title>Endereço:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite seu endereço"
+              placeholder="Digite o seu nome"
             />
           </div>
           <div className="input-container">
-            <Title>CEP:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite o CEP"
-            />
-          </div>
-
-          <div className="input-container">
-            <Title>Ramal:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite o ramal"
-            />
-          </div>
-          <div className="input-container">
-            <Title>CPF do síndico:</Title>
+            <Title>CPF:</Title>
             <input
               type="text"
               className="input-fields"
               placeholder="Digite seu CPF"
             />
           </div>
+
           <div className="input-container">
-            <Title>CNPJ:</Title>
+            <Title>UF:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite o CNPJ"
+              placeholder="Digite seu UF"
             />
           </div>
           <div className="input-container">
-            <Title>Senha:</Title>
+            <Title>Apartamento:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite sua senha"
+              placeholder="Digite seu apartamento"
             />
           </div>
+          <div className="input-container">
+            <Title>Bloco:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite seu bloco"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Data de entrada:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite a data de entrada"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Data de saída:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite a data de saída"
+            />
+          </div>
+
           <div className="contente-3"></div>
           <div class="contente-2">
             <div className="button-div">
               <Button
                 text="VOLTAR"
-                onClick={handleClicks}
+                onClick={handleClick}
                 // Função de clique
               />
 
@@ -101,4 +101,4 @@ function Cadaminion() {
   );
 }
 
-export default Cadaminion;
+export default PrestadoresC;

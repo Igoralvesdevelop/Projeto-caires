@@ -15,12 +15,14 @@ router.post('/', async (req, res) =>{
        
         const {id_usuario, nome} = users[0]
 
-        if(users.length > 0 ){
-            const token = generateToken(id_usuario, nome)
-            res.status(200).send({message: token});
+        if (users.length > 0) {
+            const { id_usuario, nome } = users[0];
+            const token = generateToken(id_usuario, nome);
+            res.status(200).send({ token });
         } else {
-            res.status(404).send({message: 'Login incorreto'});
+            res.status(404).send({ message: 'Login incorreto' });
         }
+        
     }catch(err){
         res.status(500).send({message: `Houve um erro no bancos de dados.${err}`});
     }

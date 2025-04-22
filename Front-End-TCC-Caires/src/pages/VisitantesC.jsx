@@ -1,11 +1,11 @@
-import "./Cadanario.css";
+
 import Title from "../components/Title";
-import SelectComponent from '../components/SelectComponent'; 
+import SelectV from "../components/SelectV";
 import Button from '../components/Button'
-import DropdownWithRadios from "../components/Dropdown";
+
 import { useNavigate } from "react-router-dom";
 
-function Cadanario() {
+function VeiculosC() {
 
   const navigate = useNavigate();
   
@@ -17,13 +17,13 @@ function Cadanario() {
       
       <div class="other-side">
         <div class="contente-1">
-        <Title>Adicionar um novo Funcionário:</Title>
+        <Title>Adicionar um novo Visitante:</Title>
         <div class="photo-circle">
         </div>
 
-        </div>
 
        
+        </div>
       </div>
 
       <div className="direita-side">
@@ -46,53 +46,58 @@ function Cadanario() {
             />
           </div>
           <div className="input-container">
-            <Title>Data de Nascimento:</Title>
+            <Title>RG:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite sua data de nascimento"
+              placeholder="Digite seu RG"
             />
           </div>
 
+          
           <div className="input-container">
-            <Title>Gênero:</Title>
-          <DropdownWithRadios></DropdownWithRadios>
-          </div>
-          <div className="input-container">
-            <Title>Telefone:</Title>
+            <Title>UF:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu telefone"
+              placeholder="Digite seu UF"
             />
           </div>
           <div className="input-container">
-            <Title>Email:</Title>
+            <Title>Apartamento:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu email"
+              placeholder="Digite seu apartamento"
             />
           </div>
           <div className="input-container">
-            <Title>Senha:</Title>
+            <Title>Bloco:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite sua senha"
+              placeholder="Digite seu bloco"
             />
           </div>
           <div className="input-container">
-            <Title>CNPJ do Condomínio:</Title>
+            <Title>Data de entrada:</Title>
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite o CNPJ"
+              placeholder="Digite a data de entrada"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Data de saída:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite a data de saída"
             />
           </div>
           <div>
     
-      <SelectComponent />
+      <SelectV/>
     </div>
     <div className="contente-3"></div>
     <div class="contente-2">
@@ -109,12 +114,12 @@ function Cadanario() {
               // Função de clique
             />
           </div>
+          </div>
+
         </div>
       </div>
-      </div>
-
     </div>
   );
 }
 
-export default Cadanario;
+export default VeiculosC;

@@ -1,0 +1,143 @@
+.test {
+    display: flex; /* Ativa flexbox para organizar os filhos */
+    flex-direction: row; /* Organiza os filhos horizontalmente */
+    background-color: white;
+    height: 100vh; /* Ocupa toda a altura da viewport */
+  }
+  
+  .othe-side {
+    display: flex;
+    flex-direction: column; /* Alinha conteúdo verticalmente */
+    flex: 0.4; /* Ocupa 40% da largura */
+    background-color: #fff;
+    border-radius: 16px 0 0 10px; /* Bordas arredondadas na esquerda */
+    padding: 30px; 
+   justify-content: space-between;
+   gap: 18vh; /* Espaço entre os itens */
+  }
+  
+   .conten-2 {
+    flex: 1;
+  gap:90px;
+  justify-content:space-evenly;
+  display: flex;
+  flex-direction: column;
+  align-items: center;/* Espaço entre os elementos */
+  }
+
+  .conten-1 {
+    flex: 0.55;
+  gap:40px;
+  justify-content:space-evenly;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+  
+  .direit-side {
+    flex: 0.6; /* Ocupa 60% da largura */
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 0 16px 16px 0; /* Bordas arredondadas na direita */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    padding: 20px;
+  padding-bottom: 50px;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%; /* Largura total */
+  }
+  
+  .input-fields {
+    width: 100%; /* Ocupa toda a largura disponível */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+  }
+  
+  .button-div {
+    display: flex;
+    gap: 20px; /* Espaçamento entre os botões */
+    justify-content: flex-start; /* Posiciona botões alinhados à esquerda */
+    align-items: flex-start;
+  }
+  
+  .custom-button-cad3 {
+    background-color: #ffffff;
+    border: 2px solid #000;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .phot-circle {
+    width: 14em; 
+    height: 14em; 
+    background-color: #d3d3d3; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    border: 2px dashed #bbb; 
+    overflow: hidden; 
+    cursor: pointer; 
+  }
+  .putb{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 2px;
+    width: 80%;
+    align-items: flex-start;
+    padding: 80px;
+   
+  
+  }
+  
+  /* Responsividade para tablets */
+  @media (max-width: 768px) {
+    .test {
+      flex-direction: column; /* Alinha os elementos verticalmente */
+    }
+  
+    .othe-side {
+      flex: 1; /* Faz o other-side ocupar toda a largura */
+      border-radius: 0; /* Remove as bordas arredondadas */
+      padding: 10px; /* Reduz o espaçamento interno */
+    }
+  
+    .direit-side {
+      flex: 1; /* Faz o direita-side ocupar toda a largura */
+      border-radius: 0; /* Remove as bordas arredondadas */
+      padding: 10px; /* Reduz o espaçamento interno */
+    }
+  }
+  
+  /* Responsividade para celulares */
+  @media (max-width: 480px) {
+    .phot-circle {
+      width: 8em; /* Reduz o tamanho da foto de perfil */
+      height: 8em;
+    }
+  
+    .input-fields {
+      font-size: 14px; /* Diminui o tamanho da fonte */
+      padding: 8px; /* Reduz o espaçamento interno */
+    }
+  
+    .custom-button-cad3 {
+      font-size: 12px; /* Diminui o tamanho da fonte dos botões */
+      padding: 8px; /* Reduz o tamanho dos botões */
+    }
+  }
+  

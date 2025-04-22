@@ -15,7 +15,6 @@ CREATE TABLE usuarios (
     deletado BOOLEAN DEFAULT FALSE
 );
 
-
 CREATE TABLE moradores (
 	id_morador INT PRIMARY KEY AUTO_INCREMENT,
 	nome VARCHAR(60) NOT NULL,
@@ -123,24 +122,3 @@ CREATE TABLE relatorios (
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
-
-INSERT INTO usuarios (
-    nome, 
-    email, 
-    cpf, 
-    senha, 
-    telefone, 
-    data_nascimento, 
-    genero, 
-    nivel_acesso
-) VALUES (
-    'João da Silva',
-    'joao.silva@email.com',
-    '123.456.789-00',
-    'senhaSegura123', -- idealmente, você usaria uma hash aqui
-    '(11) 9876-54321',
-    '1990-05-15',
-    'Masculino',
-    'Sindico'
-);
-

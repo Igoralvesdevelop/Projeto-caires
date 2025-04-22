@@ -1,32 +1,38 @@
-import "./Cadanario.css";
 import Title from "../components/Title";
 import SelectComponent from '../components/SelectComponent'; 
 import Button from '../components/Button'
 import DropdownWithRadios from "../components/Dropdown";
-import { useNavigate } from "react-router-dom";
 
-function Cadanario() {
 
-  const navigate = useNavigate();
-  
-    const handleClick = () => {
-      navigate("/Funciocondo");
-    };
+function MoradoresC() {
   return (
     <div class="container teste">
       
       <div class="other-side">
         <div class="contente-1">
-        <Title>Adicionar um novo Funcionário:</Title>
+        <Title>Adicionar um novo Morador:</Title>
         <div class="photo-circle">
         </div>
 
         </div>
 
-       
+        <div class="contente-2">
+          <div className="button-div">
+            <Button
+              text="VOLTAR"
+              onClick={() => alert("Botão clicado!")} // Função de clique
+            />
+          
+          <Button
+              text="CADASTRAR"
+              onClick={() => alert("Botão clicado!")} // Função de clique
+            />
+          </div>
+        </div>
       </div>
 
       <div className="direita-side">
+        <div className="tamanho"></div>
         <div className="putbu">
           <div className="input-container">
             <Title>Nome:</Title>
@@ -42,7 +48,7 @@ function Cadanario() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu CPF"
+              placeholder="Digite seu endereço"
             />
           </div>
           <div className="input-container">
@@ -50,7 +56,7 @@ function Cadanario() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite sua data de nascimento"
+              placeholder="Digite seu nome"
             />
           </div>
 
@@ -63,7 +69,31 @@ function Cadanario() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu telefone"
+              placeholder="Digite seu nome"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Apartamento:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite seu nome"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Bloco:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite seu nome"
+            />
+          </div>
+          <div className="input-container">
+            <Title>Ramal:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite seu nome"
             />
           </div>
           <div className="input-container">
@@ -71,7 +101,7 @@ function Cadanario() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite seu email"
+              placeholder="Digite seu nome"
             />
           </div>
           <div className="input-container">
@@ -79,42 +109,18 @@ function Cadanario() {
             <input
               type="text"
               className="input-fields"
-              placeholder="Digite sua senha"
+              placeholder="Digite seu nome"
             />
           </div>
-          <div className="input-container">
-            <Title>CNPJ do Condomínio:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite o CNPJ"
-            />
-          </div>
+         
           <div>
     
-      <SelectComponent />
     </div>
-    <div className="contente-3"></div>
-    <div class="contente-2">
-          <div className="button-div">
-            <Button
-              text="VOLTAR"
-              onClick={handleClick}
-               // Função de clique
-            />
-          
-          <Button
-              text="CADASTRAR"
-              onClick={() => alert("Botão clicado!")}
-              // Função de clique
-            />
-          </div>
+        
         </div>
       </div>
-      </div>
-
     </div>
   );
 }
 
-export default Cadanario;
+export default MoradoresC;
