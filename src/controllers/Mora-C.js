@@ -1,5 +1,5 @@
 import express, {request, response} from 'express';
-import { validarCPF } from '../Funçoes/funcoesl.js';
+import { vCpf } from '../helpers/validacoes.js';
 import moradores from "../services/Mora-S.js";
 
 const route = express.Router();
