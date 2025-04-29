@@ -3,75 +3,76 @@ CREATE DATABASE controle_de_acesso;
 USE controle_de_acesso;
 
 CREATE TABLE usuarios (
-	id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
-	email VARCHAR(80) NOT NULL UNIQUE,
-	cpf CHAR(14) NOT NULL UNIQUE,
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    email VARCHAR(80) NOT NULL UNIQUE,
+    cpf CHAR(14) NOT NULL UNIQUE,
+    cnpj CHAR(18) DEFAULT NULL, -- Adicionado campo para CNPJ
     senha VARCHAR(60) NOT NULL,
     telefone VARCHAR(20) DEFAULT '(99) 9999-99999',
     data_nascimento DATE DEFAULT '1970-01-01',
     genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
-	nivel_acesso ENUM('Sindico', 'Funcionario') NOT NULL,
+    nivel_acesso ENUM('Sindico', 'Funcionario') NOT NULL,
     deletado BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE moradores (
-	id_morador INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
-	cpf CHAR(14) NOT NULL UNIQUE,
-	telefone VARCHAR(20),
-	genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
-	data_nascimento DATE DEFAULT '1970-01-01',
-	apartamento VARCHAR(5) NOT NULL,
-	bloco CHAR(1) NOT NULL,
-	senha VARCHAR(60) NOT NULL,
-	email VARCHAR(80) NOT NULL UNIQUE,
+    id_morador INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    cpf CHAR(14) NOT NULL UNIQUE,
+    telefone VARCHAR(20),
+    genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
+    data_nascimento DATE DEFAULT '1970-01-01',
+    apartamento VARCHAR(5) NOT NULL,
+    bloco CHAR(1) NOT NULL,
+    senha VARCHAR(60) NOT NULL,
+    email VARCHAR(80) NOT NULL UNIQUE,
     ramal VARCHAR(5),
-	deletado BOOLEAN DEFAULT FALSE,
+    deletado BOOLEAN DEFAULT FALSE,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE prestadores_servicos_cadastrados (
-	id_prestador_servico INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
+    id_prestador_servico INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
     genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
-	cpf CHAR(14) NOT NULL UNIQUE,
-	uf VARCHAR(2) NOT NULL,
-	deletado BOOLEAN DEFAULT FALSE,
+    cpf CHAR(14) NOT NULL UNIQUE,
+    uf VARCHAR(2) NOT NULL,
+    deletado BOOLEAN DEFAULT FALSE,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE controle_prestadores (
-	id_controle_prestador INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
-	cpf CHAR(14) NOT NULL,
-	uf VARCHAR(2) NOT NULL,
-	apartamento VARCHAR(5) NOT NULL,
-	bloco CHAR(1) NOT NULL,
-	data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
-	data_saida DATETIME,
-	fk_id_prestador_servico INT NOT NULL,
+    id_controle_prestador INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    cpf CHAR(14) NOT NULL,
+    uf VARCHAR(2) NOT NULL,
+    apartamento VARCHAR(5) NOT NULL,
+    bloco CHAR(1) NOT NULL,
+    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_saida DATETIME,
+    fk_id_prestador_servico INT NOT NULL,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_prestador_servico) REFERENCES prestadores_servicos_cadastrados(id_prestador_servico) ON DELETE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE visitantes_cadastrados (
-	id_visitante INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
-	cpf CHAR(14) NOT NULL UNIQUE,
+    id_visitante INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    cpf CHAR(14) NOT NULL UNIQUE,
     telefone VARCHAR(20),
     genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
-	rg VARCHAR(14) NOT NULL,
-	uf VARCHAR(2) NOT NULL,
+    rg VARCHAR(14) NOT NULL,
+    uf VARCHAR(2) NOT NULL,
     nivel_acesso ENUM('Visitante Comum', 'Visitante Permanente'),
-	deletado BOOLEAN DEFAULT FALSE,
-	apartamento VARCHAR(5) NOT NULL,
-	bloco CHAR(1) NOT NULL,
-	data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
-	data_saida DATETIME,
+    deletado BOOLEAN DEFAULT FALSE,
+    apartamento VARCHAR(5) NOT NULL,
+    bloco CHAR(1) NOT NULL,
+    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_saida DATETIME,
     fk_id_moradores INT NOT NULL,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_moradores) REFERENCES moradores(id_morador) ON DELETE CASCADE,
@@ -79,42 +80,42 @@ CREATE TABLE visitantes_cadastrados (
 );
 
 CREATE TABLE controle_visitantes (
-	id_controle_visitantes INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(60) NOT NULL,
-	cpf CHAR(14) NOT NULL,
+    id_controle_visitantes INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    cpf CHAR(14) NOT NULL,
     telefone VARCHAR(20),
     genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
-	rg VARCHAR(14) NOT NULL,
-	uf VARCHAR(2) NOT NULL,
+    rg VARCHAR(14) NOT NULL,
+    uf VARCHAR(2) NOT NULL,
     nivel_acesso ENUM('Visitante Comum', 'Visitante Permanente'),
-	data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
-	data_saida DATETIME DEFAULT CURRENT_TIMESTAMP,
-	fk_id_visitante INT NOT NULL,
+    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_saida DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fk_id_visitante INT NOT NULL,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_visitante) REFERENCES visitantes_cadastrados(id_visitante) ON DELETE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE encomendas (
-	id_encomenda INT PRIMARY KEY AUTO_INCREMENT,
-	empresa VARCHAR(60) NOT NULL,
-	data_entrega DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_encomenda INT PRIMARY KEY AUTO_INCREMENT,
+    empresa VARCHAR(60) NOT NULL,
+    data_entrega DATETIME DEFAULT CURRENT_TIMESTAMP,
     fk_id_morador INT NOT NULL,
     status_entrega VARCHAR(30) NOT NULL DEFAULT 'Processando',
     fk_id_usuario INT,
-	FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
+    FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE eventos (
     id_evento INT PRIMARY KEY AUTO_INCREMENT,
-	cpf CHAR(14) NOT NULL,
+    cpf CHAR(14) NOT NULL,
     titulo_evento VARCHAR(60) NOT NULL,
     inicio_evento DATETIME NOT NULL,
     fim_evento DATETIME NOT NULL,
-	cor VARCHAR(10) NOT NULL,
-	status_pagamento VARCHAR(20) NOT NULL DEFAULT 'Pendente',
-	fk_id_morador INT NOT NULL,
+    cor VARCHAR(10) NOT NULL,
+    status_pagamento VARCHAR(20) NOT NULL DEFAULT 'Pendente',
+    fk_id_morador INT NOT NULL,
     fk_id_usuario INT,
     FOREIGN KEY (fk_id_morador) REFERENCES moradores(id_morador) ON DELETE CASCADE,
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
@@ -143,6 +144,7 @@ CREATE TABLE relatorios (
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-INSERT INTO usuarios (nome, email, cpf, senha, genero, nivel_acesso)
-VALUES ('João Silva', 'usuario1@email.com', '123.456.789-00', 'senha123', 'Masculino', 'Sindico');
+INSERT INTO usuarios (nome, email, cpf, cnpj, senha, genero, nivel_acesso)
+VALUES ('João Silva', 'usuario1@email.com', '123.456.789-00', '00.000.000/0000-00', 'senha123', 'Masculino', 'Sindico');
 
+SELECT * FROM usuarios;

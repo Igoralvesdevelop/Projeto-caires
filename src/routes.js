@@ -16,7 +16,7 @@ import { verifyJWT } from "./middlewares/jwt.js";
 const routes = express();
 
 //Conectar URL com Controllers
-routes.use('/funcionario', verifyJWT, funcionarioController);
+routes.use('/funcionario', funcionarioController);
 routes.use('/morador', moradorController);
 routes.use('/veiculo', verifyJWT, veiculoController);
 routes.use('/visitantes', visitanteController);
