@@ -7,7 +7,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(60) NOT NULL,
     email VARCHAR(80) NOT NULL UNIQUE,
     cpf CHAR(14) NOT NULL UNIQUE,
-    cnpj CHAR(18) DEFAULT NULL, -- Adicionado campo para CNPJ
+    cnpj CHAR(18) DEFAULT NULL, 
     senha VARCHAR(60) NOT NULL,
     telefone VARCHAR(20) DEFAULT '(99) 9999-99999',
     data_nascimento DATE DEFAULT '1970-01-01',

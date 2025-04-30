@@ -23,7 +23,7 @@ routes.use('/visitantes', visitanteController);
 routes.use('/encomendas', verifyJWT, encomendasController);
 routes.use('/eventos', verifyJWT, eventosController);
 routes.use('/controlPS', PSController);
-routes.use('/loginFunciorario', LoginFuncionarioController);
+routes.use('/loginFuncionario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
 routes.use('/relatorios', relatorioRoutes); // Corrigido aqui
 
