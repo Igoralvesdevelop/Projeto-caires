@@ -10,6 +10,7 @@ import PSController from "./controllers/Ps-C.js";
 import LoginFuncionarioController from "./controllers/Lg-FuncC.js";
 import LoginMoradorController from "./controllers/Lg-MoraC.js";
 import relatorioRoutes from "./controllers/Relatorios-C.js"; // Corrigido aqui
+import condominioController from "./controllers/Cond-C.js";
 import { verifyJWT } from "./middlewares/jwt.js";
 
 //Variável de rotas
@@ -26,6 +27,6 @@ routes.use('/controlPS', PSController);
 routes.use('/loginFuncionario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
 routes.use('/relatorios', relatorioRoutes); // Corrigido aqui
-
+routes.use('/condominio', condominioController);
 //Exportando rotas
 export default routes;
