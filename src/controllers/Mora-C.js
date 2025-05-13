@@ -15,7 +15,7 @@ route.post("/", async (request, response) =>{
     if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCPF(cpf)) {
+    if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
     
@@ -34,7 +34,7 @@ route.put("/:id_morador", async (request, response)=>{
     if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCPF(cpf)) {
+    if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
     

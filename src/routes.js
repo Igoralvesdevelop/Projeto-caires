@@ -25,7 +25,7 @@ routes.use('/eventos', verifyJWT, eventosController);
 routes.use('/controlPS', PSController);
 routes.use('/loginFuncionario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
-routes.use('/relatorios', relatorioRoutes); // Corrigido aqui
+routes.use('/relatorios', relatorioRoutes);
 
 //Exportando rotas
 export default routes;

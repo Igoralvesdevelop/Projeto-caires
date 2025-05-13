@@ -1,5 +1,6 @@
 import express, { request, response } from 'express';
 import eventos from "../services/Event-S.js";
+import { vCpf } from '../helpers/validacoes.js';
 
 const route = express.Router();
 
@@ -18,7 +19,7 @@ route.post("/", async (request, response) => {
         if(!cpf || !titulo_evento || !inicio_evento || !fim_evento || !cor || !status_pagamento || !fk_id_morador){
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
         }
-        if (!validarCPF(cpf)) {
+        if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido" });
         }
     await eventos.createEvento(cpf, titulo_evento, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador);
@@ -33,7 +34,7 @@ route.put("/:id_evento", async (request, response) => {
     if(!cpf || !titulo_evento || !inicio_evento || !fim_evento || !cor || !status_pagamento || !fk_id_morador){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCPF(cpf)) {
+    if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
 

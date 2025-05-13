@@ -1,5 +1,6 @@
 import express, { request, response } from 'express';
 import veiculos from "../services/Veic-S.js";
+import { validarPlaca } from '../helpers/validacoes.js';
 
 const route = express.Router();
 
