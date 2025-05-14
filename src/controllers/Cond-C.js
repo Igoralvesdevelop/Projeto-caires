@@ -1,6 +1,6 @@
 import express, { request, response } from 'express';
 import condominio from "../services/cond-S.js"
-import { validarCNPJ } from '../Funçoes/funcoesl.js';
+import { vCNPJ } from '../helpers/validacoes.js';
 
 const route = express.Router();
 
@@ -19,7 +19,7 @@ route.post("/", async (request, response) => {
         if(!nome ||!numero_bloco || !numero_unidades || !ramal || !cep || !endereco, !cnpj ){
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
         }
-        if (!validarCNPJ(cnpj)) {
+        if (!vCNPJ(cnpj)) {
             return response.status(400).send({ message: "CNPJ inválido" });
         }
     await condominio.createCondominio(nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj);
@@ -34,7 +34,7 @@ route.put("/:id_condominio", async (request, response) => {
     if(!nome, !numero_bloco || !numero_unidades || !ramal || !cep ||!endereco, !cnpj ){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCNPJ(cnpj)) {
+    if (!vCNPJ(cnpj)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
 

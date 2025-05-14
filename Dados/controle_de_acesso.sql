@@ -2,6 +2,21 @@ DROP DATABASE IF EXISTS controle_de_acesso;
 CREATE DATABASE controle_de_acesso;
 USE controle_de_acesso;
 
+create table nivelAcesso(
+	id_nivel int primary key auto_increment,
+    descricao varchar(30)
+);
+CREATE TABLE condominio (
+    id_condominio BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    numero_bloco INT NOT NULL,
+    numero_unidades INT NOT NULL,
+    ramal VARCHAR(20),
+    cep VARCHAR(10) NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
+    cnpj VARCHAR(14) NOT NULL UNIQUE
+);
+
 CREATE TABLE usuarios (
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(60) NOT NULL,
@@ -13,8 +28,12 @@ CREATE TABLE usuarios (
     data_nascimento DATE DEFAULT '1970-01-01',
     genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL,
     nivel_acesso ENUM('Sindico', 'Funcionario') NOT NULL,
-    deletado BOOLEAN DEFAULT FALSE
+    deletado BOOLEAN DEFAULT FALSE,
+    fk_id_condominio BIGINT NOT NULL,
+    CONSTRAINT fk_condominio FOREIGN KEY (fk_id_condominio) REFERENCES condominio(id_condominio) ON DELETE CASCADE
 );
+
+
 
 CREATE TABLE moradores (
     id_morador INT PRIMARY KEY AUTO_INCREMENT,
@@ -144,7 +163,5 @@ CREATE TABLE relatorios (
     FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
 
-INSERT INTO usuarios (nome, email, cpf, cnpj, senha, genero, nivel_acesso)
-VALUES ('João Silva', 'usuario1@email.com', '123.456.789-00', '00.000.000/0000-00', 'senha123', 'Masculino', 'Sindico');
-
-SELECT * FROM usuarios;
+insert into nivelAcesso(descricao)values('Sindico'),
+('Funcionario')

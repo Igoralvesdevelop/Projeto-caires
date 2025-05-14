@@ -10,5 +10,5 @@ server.use("/", routes);
 
 //Definindo porta e mensagem do servidor 
 server.listen(3333, ()=>{
-    console.log("Server tá on")
-});
+    console.log("Server rodando em http://localhost:3333")
+})

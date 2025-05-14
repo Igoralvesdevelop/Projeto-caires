@@ -1,6 +1,6 @@
 import express from "express";
 import funcionario from "../services/FuncS.js";
-import { validarCPF } from "../Funçoes/funcoesl.js";
+import { vCpf } from "../helpers/validacoes.js"
 
 const route = express.Router();
 
@@ -31,7 +31,7 @@ route.post("/", async (request, response) => {
         if (!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acesso || !fk_id_condominio) {
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos." });
         }
-        if (!validarCPF(cpf)) {
+        if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido." });
         }
         if (senha.length < 8) {
@@ -61,7 +61,7 @@ route.put("/:id_usuario", async (request, response) => {
         if (!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acesso || !fk_id_condominio) {
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos." });
         }
-        if (!validarCPF(cpf)) {
+        if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido." });
         }
         if (senha.length < 8) {
