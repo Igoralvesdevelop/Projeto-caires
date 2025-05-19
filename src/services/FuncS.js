@@ -25,20 +25,26 @@ function generateEmail(nome, counter = 0) {
     if (counter > 0) {
         baseEmail += counter;
     }
-    baseEmail += "@empresa.com";
+    baseEmail += "@caires.com";
     return baseEmail;
 }
 
 function formatarDataParaMySQL(data) {
-    if (!data) return null; // Verifica se a data é válida
-    const [dia, mes, ano] = data.split("/"); // Divide a data no formato DD/MM/YYYY
-    return `${ano}-${mes}-${dia}`; // Retorna no formato YYYY-MM-DD
+    if (!data) return null;
+    // Se já estiver no formato YYYY-MM-DD, retorna direto
+    if (/^\d{4}-\d{2}-\d{2}$/.test(data)) return data;
+    // Se estiver no formato DD/MM/YYYY, converte
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(data)) {
+        const [dia, mes, ano] = data.split("/");
+        return `${ano}-${mes}-${dia}`;
+    }
+    // Se não for nenhum dos formatos, retorna null
+    return null;
 }
 
-async function CreateUsuario(nome, cpf, cnpj, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio) {
+async function CreateUsuario(nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio) {
     // Remove formatações de CPF e CNPJ
     cpf = cpf ? cpf.replace(/\D/g, "") : null; // Remove tudo que não for número
-    cnpj = cnpj ? cnpj.replace(/\D/g, "") : null; // Remove tudo que não for número
 
     // Converte a data de nascimento para o formato MySQL
     if (dt_nascimento) {
@@ -54,18 +60,18 @@ async function CreateUsuario(nome, cpf, cnpj, senha, telefone, dt_nascimento, ge
     }
 
     const sql =
-        "INSERT INTO usuarios(nome, email, cpf, cnpj, senha, telefone, data_nascimento, genero, nivel_acesso, fk_id_condominio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const infoUser = [nome, email, cpf, cnpj, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio];
+        "INSERT INTO usuarios(nome, email, cpf, senha, telefone, data_nascimento, genero, nivel_acesso, fk_id_condominio) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
+    const infoUser = [nome, email, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoUser);
     connect.end();
 }
 
-async function UpdateUsuario(nome, email, cpf, cnpj, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio, id_usuario) {
+async function UpdateUsuario(nome, email, cpf,  senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio, id_usuario) {
     // Remove formatações de CPF e CNPJ
     cpf = cpf ? cpf.replace(/\D/g, "") : null; // Remove tudo que não for número
-    cnpj = cnpj ? cnpj.replace(/\D/g, "") : null; // Remove tudo que não for número
+   
 
     // Converte a data de nascimento para o formato MySQL
     if (dt_nascimento) {
@@ -73,8 +79,8 @@ async function UpdateUsuario(nome, email, cpf, cnpj, senha, telefone, dt_nascime
     }
 
     const sql =
-        "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, cnpj = ?, senha = ?, telefone = ?, data_nascimento = ?, genero = ?, nivel_acesso = ?, fk_id_condominio = ? WHERE id_usuario = ?";
-    const infoUser = [nome, email, cpf, cnpj, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio, id_usuario];
+        "UPDATE usuarios SET nome = ?, email = ?, cpf = ?, senha = ?, telefone = ?, data_nascimento = ?, genero = ?, nivel_acesso = ?, fk_id_condominio = ? WHERE id_usuario = ?";
+    const infoUser = [nome, email, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio, id_usuario];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoUser);

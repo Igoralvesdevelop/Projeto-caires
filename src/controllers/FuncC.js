@@ -25,7 +25,7 @@ route.get("/", async (request, response) => {
 
 // Endpoint para criar um funcionário
 route.post("/", async (request, response) => {
-    const { nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, cnpj, fk_id_condominio } = request.body;
+    const { nome, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso,  fk_id_condominio } = request.body;
 
     try {
         if (!nome || !cpf || !senha || !dt_nascimento || !genero || !nivel_acesso || !fk_id_condominio) {
@@ -40,10 +40,10 @@ route.post("/", async (request, response) => {
 
         // Remove formatações de CPF, CNPJ e converte a data de nascimento para o formato MySQL
         const cpfLimpo = cpf.replace(/\D/g, "");
-        const cnpjLimpo = cnpj ? cnpj.replace(/\D/g, "") : null;
+      
         const dtNascimentoMySQL = formatarDataParaMySQL(dt_nascimento);
 
-        await funcionario.CreateUsuario(nome, cpfLimpo, cnpjLimpo, senha, telefone, dtNascimentoMySQL, genero, nivel_acesso, fk_id_condominio);
+        await funcionario.CreateUsuario(nome, cpfLimpo, senha, telefone, dtNascimentoMySQL, genero, nivel_acesso, fk_id_condominio);
 
         return response.status(201).send({ message: "Funcionário cadastrado com sucesso!" });
     } catch (error) {
@@ -54,7 +54,7 @@ route.post("/", async (request, response) => {
 
 // Endpoint para atualizar um funcionário
 route.put("/:id_usuario", async (request, response) => {
-    const { nome, email, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, cnpj, fk_id_condominio } = request.body;
+    const { nome, email, cpf, senha, telefone, dt_nascimento, genero, nivel_acesso, fk_id_condominio } = request.body;
     const { id_usuario } = request.params;
 
     try {
@@ -70,10 +70,10 @@ route.put("/:id_usuario", async (request, response) => {
 
         // Remove formatações de CPF, CNPJ e data de nascimento
         const cpfLimpo = cpf.replace(/\D/g, "");
-        const cnpjLimpo = cnpj ? cnpj.replace(/\D/g, "") : null;
+ 
         const dtNascimentoLimpo = dt_nascimento.replace(/\D/g, "");
 
-        await funcionario.UpdateUsuario(nome, email, cpfLimpo, cnpjLimpo, senha, telefone, dtNascimentoLimpo, genero, nivel_acesso, fk_id_condominio, id_usuario);
+        await funcionario.UpdateUsuario(nome, email, cpfLimpo,  senha, telefone, dtNascimentoLimpo, genero, nivel_acesso, fk_id_condominio, id_usuario);
 
         return response.status(200).send({ message: "Funcionário atualizado com sucesso!" });
     } catch (error) {
