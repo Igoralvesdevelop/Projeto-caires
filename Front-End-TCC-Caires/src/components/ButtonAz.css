@@ -1,0 +1,46 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+.botao-vertical.selecionado {
+  transform: translateX(-5px);
+  pointer-events: none;
+  background-color: #00c8ff;
+}
+.botao-vertical:hover {
+  background-color: #005f8a; /* Tom mais escuro ao passar o mouse */
+  transform: translateX(-5px);
+}
+
+.texto-rotacionado {
+  transform: rotate(-90deg);
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-size: 1vw;
+  text-align: center;
+}
+
+.layout-lateral {
+  display: flex;
+  min-height: 70.2vh;
+}
+
+.botao-vertical {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00aeea;
+  color: #000;
+  padding: 12px;
+  border: none;
+  border-radius: 12px 0 0 12px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  height: 120px;
+  width: 70px;
+  text-align: center;
+  transition: transform 0.3s ease, margin 0.3s ease;
+}

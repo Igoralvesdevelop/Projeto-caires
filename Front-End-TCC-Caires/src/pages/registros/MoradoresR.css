@@ -1,0 +1,179 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+.continente {
+    display: flex;
+    flex-direction: column;
+    width: 65vw;
+    height: 75vh;
+    border-radius: 20px;
+    box-shadow: 40px 40px 10px #00000040;
+    flex-grow: 1; 
+  }
+  .continente-1 {
+    flex: 0.55;
+    
+  
+  }
+.container-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  width: 65vw;
+  height: 75vh;
+  position: relative;
+}
+
+/* Ajusta os botões corretamente */
+.container-botoes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botão acima do continente */
+.container-botoes > :first-child {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Botão ao lado do continente */
+.container-botoes > :last-child {
+  position: absolute;
+  left: -70px;
+  top: 52%;
+  transform: translateY(-50%);
+}
+
+.continent-4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Permite posicionamento correto */
+  width: 65vw;
+  height: 75vh;
+}
+
+
+ 
+  .procura-2 {
+    flex: 1;
+    gap:10px;
+    justify-content:space-evenly;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end
+  }
+  
+  .pesquisa-side {
+    display: flex;
+    flex-direction: column;
+    flex: 0.4;
+    background-color: #ffffff;
+    border-radius: 16px 10px 0 0;
+    padding: 30px;
+  }
+  
+  .label-side {
+    flex: 0.8;
+    background-color: #ffffff;
+    display: flex;
+    border-radius: 0 0 16px 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    /* padding: 30px; */
+    padding-bottom: 60px;
+    
+  
+  
+  }
+  .dive-label {
+    display: flex;
+    flex-direction: row; /* Organiza as filhas em linha */
+    justify-content: flex-start; 
+    gap: 2px; 
+    width: 100%; 
+    align-items: flex-start; /* Alinha os itens ao topo */
+    padding: 10px;
+    overflow-y: auto; /* Scroll vertical ativado */
+    max-height: 47vh; /* Define altura máxima para ativar o scroll */
+    box-sizing: border-box; 
+  }
+  
+  .div-label,
+  .div1-label,.div2-label 
+    {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px; 
+    width: 48%; 
+    box-sizing: border-box; 
+  }
+  
+
+  
+  .text-container {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 2px; 
+    width: 100%; 
+  }
+  
+  .text-fields {
+    width: 91%;
+    padding: 10px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    border: 2px solid #ccc; 
+    background-color: #D9D9D9; 
+    height: 2.5vh;
+  }
+  .img-cadA {
+    width: 16%; 
+    height: auto; 
+    max-width: 300px;
+  
+  }
+
+  .input-contain {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 10px;
+    pointer-events: none; /* evita bloquear clique no input */
+  }
+  
+  .input-fiels {
+    width: 100%;
+    padding: 10px 10px 10px 35px; /* padding esquerdo para o ícone */
+    border-radius: 5px; 
+    font-size: 16px; 
+    border: 2px solid #ccc; 
+    background-color: #D9D9D9; 
+    height: 5.5vh;
+    box-sizing: border-box;
+  }
+ 
+  p{
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 400 90;
+    text-align: center;
+
+  }

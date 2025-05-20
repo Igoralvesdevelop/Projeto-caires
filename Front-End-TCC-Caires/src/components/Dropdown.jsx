@@ -1,59 +1,55 @@
 import React, { useState } from "react";
 import "./Dropdown.css";
 
-const DropdownWithRadios = () => {
+const DropdownWithRadios = ({ onChange }) => {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    const value = event.target.value;
+    setSelectedOption(value);
+    onChange(value); // Envia o valor selecionado para o componente pai
   };
 
   return (
     <div className="dropdown">
-
-  
-        <ul className="dropdown-options">
-          <li>
-            <label>
-              <input
-                type="radio"
-                name="dropdown"
-                value="Opção 1"
-                onChange={handleOptionChange}
-              />
-             Feminino
-            </label>
-          </li>
-          <li>
-            <label>
-              <input
-                type="radio"
-                name="dropdown"
-                value="Opção 2"
-                onChange={handleOptionChange}
-              />
-           Masculino
-            </label>
-          </li>
-          <li>
-            <label>
-              <input
-                type="radio"
-                name="dropdown"
-                value="Opção 3"
-                onChange={handleOptionChange}
-              />
-              Outro
-            </label>
-          </li>
-        </ul>
-
+      <ul className="dropdown-options">
+        <li>
+          <label>
+            <input
+              type="radio"
+              name="dropdown"
+              value="Feminino"
+              checked={selectedOption === "Feminino"}
+              onChange={handleOptionChange}
+            />
+            Feminino
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="radio"
+              name="dropdown"
+              value="Masculino"
+              checked={selectedOption === "Masculino"}
+              onChange={handleOptionChange}
+            />
+            Masculino
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="radio"
+              name="dropdown"
+              value="Outro"
+              checked={selectedOption === "Outro"}
+              onChange={handleOptionChange}
+            />
+            Outro
+          </label>
+        </li>
+      </ul>
     </div>
   );
 };

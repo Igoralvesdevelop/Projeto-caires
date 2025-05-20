@@ -1,28 +1,27 @@
-
 import Title from "../components/Title";
 import SelectV from "../components/SelectV";
-import Button from '../components/Button'
+import Button from "../components/Button";
+import PickDate from "../components/PickDate";
+import DropdownWithRadios from "../components/Dropdown";
+import MeuMenu from "../components/MeuMenu";
 
 import { useNavigate } from "react-router-dom";
 
-function VeiculosC() {
-
+function VisitantesC() {
   const navigate = useNavigate();
-  
-    const handleClick = () => {
-      navigate("/Funciocondo");
-    };
+
+  const handleClick = () => {
+    navigate("/Funciocondo");
+  };
   return (
     <div class="container teste">
-      
       <div class="other-side">
         <div class="contente-1">
-        <Title>Adicionar um novo Visitante:</Title>
-        <div class="photo-circle">
-        </div>
-
-
-       
+          <div>
+            <MeuMenu /> {/* Aqui o menu aparece na tela */}
+          </div>
+          <Title>Adicionar um novo Visitante:</Title>
+          <div class="photo-circle"></div>
         </div>
       </div>
 
@@ -53,8 +52,18 @@ function VeiculosC() {
               placeholder="Digite seu RG"
             />
           </div>
-
-          
+          <div className="input-container">
+            <Title>Gênero:</Title>
+            <DropdownWithRadios></DropdownWithRadios>
+          </div>
+          <div className="input-container">
+            <Title>Telefone:</Title>
+            <input
+              type="text"
+              className="input-fields"
+              placeholder="Digite seu telefone"
+            />
+          </div>
           <div className="input-container">
             <Title>UF:</Title>
             <input
@@ -81,45 +90,36 @@ function VeiculosC() {
           </div>
           <div className="input-container">
             <Title>Data de entrada:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite a data de entrada"
-            />
-          </div>
-          <div className="input-container">
-            <Title>Data de saída:</Title>
-            <input
-              type="text"
-              className="input-fields"
-              placeholder="Digite a data de saída"
-            />
-          </div>
-          <div>
-    
-      <SelectV/>
-    </div>
-    <div className="contente-3"></div>
-    <div class="contente-2">
-          <div className="button-div">
-            <Button
-              text="VOLTAR"
-              onClick={handleClick}
-               // Função de clique
-            />
-          
-          <Button
-              text="CADASTRAR"
-              onClick={() => alert("Botão clicado!")}
-              // Função de clique
-            />
-          </div>
+            <PickDate />
           </div>
 
+          <div className="input-container">
+            <Title>Data de saída:</Title>
+            <PickDate />
+          </div>
+          <div>
+            <SelectV />
+          </div>
+          <div className="contente-3"></div>
+          <div class="contente-2">
+            <div className="button-div">
+              <Button
+                text="VOLTAR"
+                onClick={handleClick}
+                // Função de clique
+              />
+
+              <Button
+                text="CADASTRAR"
+                onClick={() => alert("Botão clicado!")}
+                // Função de clique
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default VeiculosC;
+export default VisitantesC;

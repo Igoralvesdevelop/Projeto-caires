@@ -26,12 +26,8 @@
   }
 
   .conten-1 {
-    flex: 0.55;
-  gap:40px;
-  justify-content:space-evenly;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+      flex: 0.55;
+
   }
   
   .direit-side {

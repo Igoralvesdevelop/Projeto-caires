@@ -1,5 +1,7 @@
 import Title from "../components/Title";
 import Button from '../components/Button'
+import PickDate from "../components/PickDate";
+import MeuMenu from "../components/MeuMenu";
 
 
 function PedidosC () {
@@ -9,12 +11,13 @@ function PedidosC () {
         <div class="container ">
           
           <div class="othe-side">
-            {/* <div class="conten-1"> */}
+            <div class="conten-1">
+             <div>
+      <MeuMenu /> 
+    </div>
             <Title>Adicionar uma nova encomenda:</Title>
-            {/* <div class="phot-circle">
-            </div>
     
-            </div> */}
+            </div> 
     
            
           </div>
@@ -41,13 +44,8 @@ function PedidosC () {
               </div>
               <div className="input-container">
                 <Title>Data da Entrega:</Title>
-                <input
-                  type="text"
-                  className="input-fields"
-                  placeholder="Digite a data de entrega"
-                />
-              </div>
-    
+                <PickDate />
+</div>
               <div className="input-container">
                 <Title>Status da Entrega:</Title>
                 <input
