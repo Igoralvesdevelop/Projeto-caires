@@ -1,6 +1,7 @@
 import express from "express";
 import funcionario from "../services/FuncS.js";
 import { vCpf } from "../helpers/validacoes.js"
+import { validarSenhaForte } from "../helpers/validacoes.js";
 
 const route = express.Router();
 
@@ -34,8 +35,8 @@ route.post("/", async (request, response) => {
         if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido." });
         }
-        if (senha.length < 8) {
-            return response.status(400).send({ message: "A senha deve possuir no mínimo 8 caracteres." });
+        if (!validarSenhaForte(senha)) {
+            return response.status(400).send({ message: "A senha deve possuir no mínimo 8 caracteres, 1 caractér especial e 1 número." });
         }
 
         // Remove formatações de CPF, CNPJ e converte a data de nascimento para o formato MySQL

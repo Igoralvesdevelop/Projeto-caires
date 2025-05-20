@@ -79,4 +79,9 @@ function vTelefone(telefone) {
   return /^(\(?\d{2}\)?\s?)?9?\d{4}-?\d{4}$/.test(telefone);
 }
 
-export { vCpf, vCNPJ, validarEmail, validarSenhaForte, validarPlaca, validarUF, vTelefone };
+function validarCEP(cep) {
+
+  return /^\d{5}-?\d{3}$/.test(cep);
+}
+
+export { vCpf, vCNPJ, validarEmail, validarSenhaForte, validarPlaca, validarUF, vTelefone, validarCEP };

@@ -164,4 +164,4 @@ CREATE TABLE relatorios (
 );
 
 insert into nivelAcesso(descricao)values('Sindico'),
-('Funcionario')
+('Funcionario') 

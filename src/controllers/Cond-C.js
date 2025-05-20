@@ -1,6 +1,7 @@
 import express, { request, response } from 'express';
 import condominio from "../services/cond-S.js"
-import { vCNPJ } from '../helpers/validacoes.js';
+import { validarCEP, vCNPJ } from '../helpers/validacoes.js';
+
 
 const route = express.Router();
 
@@ -36,6 +37,9 @@ route.put("/:id_condominio", async (request, response) => {
     }
     if (!vCNPJ(cnpj)) {
         return response.status(400).send({ message: "CPF inválido" });
+    }
+    if (!validarCEP(cep)) {
+        return response.status(400).send({ message: "CEP inválido" });
     }
 
     await condominio.updateCondominio(nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj, id_condominio);
