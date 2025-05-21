@@ -19,7 +19,7 @@ function vCpf(cpf) {
 function vCNPJ(cnpj) {
     if (!cnpj) return false;
 
-    
+
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
     if (cnpj.length !== 14) return false;
