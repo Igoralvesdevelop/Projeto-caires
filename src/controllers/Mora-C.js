@@ -3,6 +3,11 @@ import { vCpf } from '../helpers/validacoes.js';
 import moradores from "../services/Mora-S.js";
 
 const route = express.Router();
+
+function formatarDataParaMySQL(data) {
+    const [dia, mes, ano] = data.split("/"); // Supondo que a data venha no formato DD/MM/YYYY
+    return `${ano}-${mes}-${dia}`; // Retorna no formato YYYY-MM-DD
+}
 route.get("/", async (request, response) =>{
     const Morador = await moradores.listMorador();
     if(Morador.length <1){
@@ -22,7 +27,10 @@ route.post("/", async (request, response) =>{
     if(senha.length < 8){
         return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
     }
-    await moradores.CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal )
+    const cpfLimpo = cpf.replace(/\D/g, "");
+      
+    const dtNascimentoMySQL = formatarDataParaMySQL(dt_nascimento);
+    await moradores.CreateMorador(nome, cpfLimpo, telefone, genero, dtNascimentoMySQL, apartamento, bloco, senha, email, ramal )
     
     return response.status(201).send({"message": "Morador cadastrado"})
 })
