@@ -129,6 +129,8 @@ CREATE TABLE eventos (
     id_evento INT PRIMARY KEY AUTO_INCREMENT,
     cpf CHAR(14) NOT NULL,
     titulo_evento VARCHAR(60) NOT NULL,
+    descricao_evento TEXT NOT NULL, -- Adicionado campo para descrição do evento
+    tipo VARCHAR(30) NOT NULL, -- Adicionado campo para tipo do evento
     inicio_evento DATETIME NOT NULL,
     fim_evento DATETIME NOT NULL,
     cor VARCHAR(10) NOT NULL,
@@ -163,4 +165,4 @@ CREATE TABLE relatorios (
 );
 
 insert into nivelAcesso(descricao)values('Sindico'),
-('Funcionario') 
+('Funcionario')

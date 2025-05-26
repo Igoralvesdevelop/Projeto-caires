@@ -4,7 +4,7 @@ async function bancoDados(){
     return await mysql.createConnection({
         "host":"localhost",
         "user":"root",
-        "password":"neto12512y",
+        "password":"",
         "port": 3306,
         "database":"controle_de_acesso"
         })
