@@ -13,26 +13,26 @@ route.get("/", async (request, response) => {
 
 
 route.post("/", async (request, response) => {
-    const { modelo, placa, cor, tipo, fk_id_morador } = request.body;
+    const { modelo, placa, cor, tipo_veiculo, fk_id_morador } = request.body;
     
-     if(!nome || !placa || !cor || !tipo || !fk_id_morador){
+     if(!modelo || !placa || !cor || !tipo_veiculo || !fk_id_morador){
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
         }
 
-    await veiculos.createVeiculo(modelo, placa, cor, tipo, fk_id_morador);
+    await veiculos.createVeiculo(modelo, placa, cor, tipo_veiculo, fk_id_morador);
 
     return response.status(201).send({ "message": "Veículo cadastrado com sucesso" });
 });
 
 route.put("/:id_veiculo", async (request, response) => {
-    const { modelo, placa, cor, tipo, fk_id_morador } = request.body;
+    const { modelo, placa, cor, tipo_veiculo, fk_id_morador } = request.body;
     const { id_veiculo } = request.params;
 
-    if(!nome || !placa || !cor || !tipo || !fk_id_morador){
+    if(!modelo || !placa || !cor || !tipo_veiculo || !fk_id_morador){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
 
-    await veiculos.updateVeiculo(modelo, placa, cor, tipo, fk_id_morador, id_veiculo);
+    await veiculos.updateVeiculo(modelo, placa, cor, tipo_veiculo, fk_id_morador, id_veiculo);
 
     return response.status(200).send({ "message": "Veículo atualizado com sucesso" });
 });
