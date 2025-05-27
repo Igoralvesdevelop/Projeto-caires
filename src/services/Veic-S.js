@@ -9,20 +9,20 @@ async function listVeiculos() {
     return rows;
 }
 
-async function createVeiculo(modelo, placa, cor, tipo, fk_id_morador) {
-    const sql = 'INSERT INTO veiculos(modelo, placa, cor, tipo, fk_id_morador) VALUES (?, ?, ?, ?, ?)';
+async function createVeiculo(modelo, placa, cor, tipo_veiculo, fk_id_morador) {
+    const sql = 'INSERT INTO veiculos(modelo, placa, cor, tipo_veiculo, fk_id_morador) VALUES (?, ?, ?, ?, ?)';
 
-    const infoVeiculo = [modelo, placa, cor, tipo, fk_id_morador];
+    const infoVeiculo = [modelo, placa, cor, tipo_veiculo, fk_id_morador];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoVeiculo);
     connect.end;    
 }
 
-async function updateVeiculo(modelo, placa, cor, tipo, fk_id_morador, id_veiculo) {
-    const sql = 'UPDATE veiculos SET modelo = ?, placa = ?, cor = ?, tipo = ?, fk_id_morador = ? WHERE id_veiculo = ?';
+async function updateVeiculo(modelo, placa, cor, tipo_veiculo, fk_id_morador, id_veiculo) {
+    const sql = 'UPDATE veiculos SET modelo = ?, placa = ?, cor = ?, tipo_veiculo = ?, fk_id_morador = ? WHERE id_veiculo = ?';
 
-    const infoVeiculo = [modelo, placa, cor, tipo, fk_id_morador, id_veiculo];
+    const infoVeiculo = [modelo, placa, cor, tipo_veiculo, fk_id_morador, id_veiculo];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoVeiculo);
