@@ -60,5 +60,14 @@ route.delete("/:id_morador", async (request, response)=>{
     await moradores.DeleteMoradores(id_morador);
     
     return response.status(200).send({"message":"Usuario excluido com sucesso"})
-})
+}),
+route.get("/:id_morador", async (request, response) => {
+    const { id_morador } = request.params;
+    const morador = await moradores.getMoradorById(id_morador);
+    if (!morador) {
+        return response.status(404).send({ message: "Morador não encontrado" });
+    }
+    return response.status(200).send({ message: morador });''
+});
+
 export default route;

@@ -17,9 +17,11 @@ async function listMorador() {
 }
 
 async function CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal) {
+    const id_morador = Math.floor(100000 + Math.random() * 900000);
+
     const sql =
-        "INSERT INTO moradores(nome, cpf, telefone, genero, data_nascimento, apartamento, bloco, senha, email, ramal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const infoMorador = [nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal];
+        "INSERT INTO moradores(id_morador, nome, cpf, telefone, genero, data_nascimento, apartamento, bloco, senha, email, ramal) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const infoMorador = [id_morador,nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal];
     let connect;
 
     try {
@@ -79,4 +81,12 @@ async function DeleteMoradores(id_morador) {
     }
 }
 
-export default { CreateMorador, UpdateMorador, DeleteMoradores, listMorador };
+async function getMoradorById(id_morador) {
+    const sql = "SELECT * FROM moradores WHERE id_morador = ?";
+    const connect = await mysql.bancoDados();
+    const [rows] = await connect.query(sql, [id_morador]);
+    connect.end;
+    return rows[0];
+}
+
+export default { CreateMorador, UpdateMorador, DeleteMoradores, listMorador, getMoradorById };

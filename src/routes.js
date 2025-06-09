@@ -29,6 +29,8 @@ routes.use('/controlPS', PSController);
 routes.use('/loginFuncionario', LoginFuncionarioController);
 routes.use('/loginMorador', LoginMoradorController);
 routes.use('/relatorios', relatorioRoutes);
-routes.use('/condominio', condominioController);
+routes.use('/condominio',   condominioController);
+routes.use("/uploads", express.static("uploads"));
+
 //Exportando rotas
 export default routes;

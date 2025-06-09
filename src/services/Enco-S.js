@@ -9,10 +9,9 @@ async function listEncomendas() {
     return rows;
 }
 
-async function createEncomenda(empresa, data_entrega, fk_id_morador, status_entrega) {
-    const sql = 'INSERT INTO encomendas(empresa, data_entrega, fk_id_morador, status_entrega) VALUES (?, ?, ?, ?)';
-
-    const infoEncomenda = [empresa, data_entrega, fk_id_morador, status_entrega];
+async function createEncomenda(empresa,  fk_id_morador, status_entrega, imagem) {
+    const sql = 'INSERT INTO encomendas(empresa, fk_id_morador, status_entrega, imagem) VALUES ( ?, ?, ?, ?)';
+    const infoEncomenda = [empresa,  fk_id_morador, status_entrega, imagem];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoEncomenda);

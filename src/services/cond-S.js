@@ -9,19 +9,21 @@ async function listCond() {
     return rows;
 }
 
-async function createCondominio(nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj) {
+async function createCondominio(nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj, email) {
     const id_condominio = Math.floor(100000 + Math.random() * 900000);
 
     // Remove pontos, traços e barras do CNPJ
     const cnpjLimpo = cnpj.replace(/[.\-/]/g, '');
 
-    const sql = 'INSERT INTO condominio(id_condominio, nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO condominio(id_condominio, nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-    const infoCondominio = [id_condominio, nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpjLimpo];
+    const infoCondominio = [id_condominio, nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpjLimpo, email];
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, infoCondominio);
     connect.end;
+
+    return {id_condominio}
 }
 
 async function updateCondominio(nome,numero_bloco, numero_unidades, ramal, cep,endereco, cnpj) {
