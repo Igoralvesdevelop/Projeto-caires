@@ -1,8 +1,8 @@
 import mysql from "../repository/mysql.js";
 
-async function login(senha, email) {
-    const sql = 'SELECT * FROM moradores WHERE senha = ? AND email = ?;' ;
-    const datalogin = [ senha, email];
+async function login(email, senha) {
+    const sql = 'SELECT * FROM moradores WHERE email = ? AND senha = ?;';
+    const datalogin = [email, senha];
 
     const conn = await mysql.bancoDados();
     const [rows] = await conn.query(sql, datalogin);
@@ -13,8 +13,8 @@ async function login(senha, email) {
 async function checkEmail(email) {
     const sql = 'SELECT * FROM moradores WHERE email = ?';
 
-    const conn = await mysql.bancoDados()
-    const [rows] = await conn.query(sql, email)
+    const conn = await mysql.bancoDados();
+    const [rows] = await conn.query(sql, [email]);
     conn.end();
 
     return rows;
@@ -22,11 +22,11 @@ async function checkEmail(email) {
 
 async function changePassword(email, newPassword) {
     const sql = 'UPDATE moradores SET senha = ? WHERE email = ?';
-    const dataNewPass = [newPassword, email]
+    const dataNewPass = [newPassword, email];
 
     const conn = await mysql.bancoDados();
-    await conn.query(sql, dataNewPass)
-    conn.end()
+    await conn.query(sql, dataNewPass);
+    conn.end();
 }
 
-export default {login , checkEmail, changePassword};
+export default { login, checkEmail, changePassword };

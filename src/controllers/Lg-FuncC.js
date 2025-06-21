@@ -1,50 +1,53 @@
 import express from "express";
-import db from "../services/Lg-FuncS.js"
+import db from "../services/Lg-FuncS.js";
+import jwt from "jsonwebtoken";
 import { generatePassword } from "../helpers/loginactions.js";
-import { generateToken } from "../helpers/userfeatures.js";
 
 const router = express.Router();
+const secret = process.env.JWT_SECRET || 'Senh@CrIpTOgr@FaaDA!?';
 
-router.post('/', async (req, res) =>{
+router.post('/', async (req, res) => {
+    const { email, senha } = req.body;
 
-    const {email, senha} = req.body;
-
-    try{
-
+    try {
         const users = await db.login(email, senha);
-       
-        const {id_usuario, nome} = users[0]
 
-        if (users.length > 0) {
-            const { id_usuario, nome } = users[0];
-            const token = generateToken(id_usuario, nome);
-            res.status(200).send({ token });
-        } else {
-            res.status(404).send({ message: 'Login incorreto' });
+        if (users.length === 0) {
+            return res.status(401).json({ error: 'Credenciais inválidas' });
         }
+
+        const usuario = users[0];
+        const tipo = usuario.nivel_acesso; // ou outro campo que represente o tipo
+
+        // Gera token JWT com id e tipo
+        const token = jwt.sign(
+            { id: usuario.id_usuario, tipo },
+            secret,
+            { expiresIn: '5h' }
+        );
         
-    }catch(err){
-        res.status(500).send({message: `Houve um erro no bancos de dados.${err}`});
+        res.json({ token, tipo });
+    } catch (err) {
+        res.status(500).send({ message: `Houve um erro no banco de dados. ${err}` });
     }
 });
 
-router.post('/reset', async (req, res) =>{
+router.post('/reset', async (req, res) => {
+    const { email } = req.body;
 
-    const {email} = req.body;
-
-    try{
-
+    try {
         const users = await db.checkEmail(email);
 
-        if(users.length > 0 ){
+        if (users.length > 0) {
             const newPassword = generatePassword();
-            await db.changePassword(email, newPassword)
-            res.status(200).send({message: `Nova senha ${newPassword}`});
+            await db.changePassword(email, newPassword);
+            res.status(200).send({ message: `Nova senha ${newPassword}` });
         } else {
-            res.status(404).send({message: 'Usuario não encontrado'});
+            res.status(404).send({ message: 'Usuario não encontrado' });
         }
-    }catch(err){
-        res.status(500).send({message: `Houve um erro no bancos de dados.${err}`});
+    } catch (err) {
+        res.status(500).send({ message: `Houve um erro no banco de dados. ${err}` });
     }
 });
-export default router
+
+export default router;

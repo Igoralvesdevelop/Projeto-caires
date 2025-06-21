@@ -19,16 +19,16 @@ const upload = multer({ storage: storage });
 
 // Cadastrar encomenda
 route.post("/", upload.single("imagem"), async (request, response) => {
-    const { empresa,  fk_id_morador, status_entrega } = request.body;
+    const { empresa, id_unidade, status_entrega, data_entrega } = request.body;
     const imagem = request.file ? request.file.filename : null;
 
-    if(!empresa  || !fk_id_morador || !status_entrega){
+    if (!empresa || !id_unidade || !status_entrega) {
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
 
-    await encomendas.createEncomenda(empresa, fk_id_morador, status_entrega, imagem);
+    await encomendas.createEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega || null);
 
-    return response.status(201).send({ "message": "Encomenda cadastrada com sucesso" });
+    return response.status(201).send({ message: "Encomenda cadastrada com sucesso" });
 });
 
 // Listar todas as encomendas
@@ -52,17 +52,17 @@ route.get("/:id_encomenda", async (request, response) => {
 
 // Atualizar encomenda
 route.put("/:id_encomenda", upload.single("imagem"), async (request, response) => {
-    const { empresa, data_entrega, fk_id_morador, status_entrega } = request.body;
+    const { empresa, id_unidade, status_entrega, data_entrega } = request.body;
     const { id_encomenda } = request.params;
     const imagem = request.file ? request.file.filename : null;
 
-    if(!empresa || !data_entrega || !fk_id_morador || !status_entrega){
+    if (!empresa || !id_unidade || !status_entrega) {
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
 
-    await encomendas.updateEncomenda(empresa, data_entrega, fk_id_morador, status_entrega, imagem, id_encomenda);
+    await encomendas.updateEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega || null, id_encomenda);
 
-    return response.status(200).send({ "message": "Encomenda atualizada com sucesso" });
+    return response.status(200).send({ message: "Encomenda atualizada com sucesso" });
 });
 
 // Deletar encomenda

@@ -16,12 +16,12 @@ async function listMorador() {
     }
 }
 
-async function CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal) {
+async function CreateMorador(nome, cpf, senha, id_genero, data_nascimento, email, id_unidade) {
     const id_morador = Math.floor(100000 + Math.random() * 900000);
 
     const sql =
-        "INSERT INTO moradores(id_morador, nome, cpf, telefone, genero, data_nascimento, apartamento, bloco, senha, email, ramal) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const infoMorador = [id_morador,nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal];
+        "INSERT INTO moradores(id_morador, nome, cpf, id_genero, data_nascimento, email, id_unidade) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const infoMorador = [id_morador,nome, cpf, senha, id_genero, data_nascimento, email, id_unidade];
     let connect;
 
     try {
@@ -41,10 +41,10 @@ async function CreateMorador(nome, cpf, telefone, genero, dt_nascimento, apartam
     }
 }
 
-async function UpdateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador) {
+async function UpdateMorador(nome, cpf, id_genero, data_nascimento, email, id_morador) {
     const sql =
-        "UPDATE moradores SET nome = ?, cpf = ?, telefone = ?, genero = ?, data_nascimento = ?, apartamento = ?, bloco = ?, senha = ?, email = ?, ramal = ? WHERE id_morador = ?";
-    const infoMorador = [nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador];
+        "UPDATE moradores SET nome = ?, cpf = ?,= ?, senha = ?, id_genero = ?, data_nascimento = ?, email = ?, id_unidade = ? WHERE id_morador = ?";
+    const infoMorador = [nome, cpf, senha, id_genero, data_nascimento, email, id_unidade, id_morador];
     let connect;
 
     try {

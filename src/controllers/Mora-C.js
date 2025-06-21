@@ -5,8 +5,8 @@ import moradores from "../services/Mora-S.js";
 const route = express.Router();
 
 function formatarDataParaMySQL(data) {
-    const [dia, mes, ano] = data.split("/"); // Supondo que a data venha no formato DD/MM/YYYY
-    return `${ano}-${mes}-${dia}`; // Retorna no formato YYYY-MM-DD
+    const [dia, mes, ano] = data.split("/");
+    return `${ano}-${mes}-${dia}`;
 }
 route.get("/", async (request, response) =>{
     const Morador = await moradores.listMorador();
@@ -16,8 +16,8 @@ route.get("/", async (request, response) =>{
     return response.status(200).send({"message":Morador})
 })
 route.post("/", async (request, response) =>{
-    const {nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal} = request.body;
-    if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
+    const {nome, cpf, senha, data_nascimento, id_genero, email, id_unidade} = request.body;
+    if(!nome || !cpf || !senha || !data_nascimento || !id_genero || !email || !id_unidade){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
     if (!vCpf(cpf)) {
@@ -29,17 +29,17 @@ route.post("/", async (request, response) =>{
     }
     const cpfLimpo = cpf.replace(/\D/g, "");
       
-    const dtNascimentoMySQL = formatarDataParaMySQL(dt_nascimento);
-    await moradores.CreateMorador(nome, cpfLimpo, telefone, genero, dtNascimentoMySQL, apartamento, bloco, senha, email, ramal )
+    const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
+    await moradores.CreateMorador(nome, cpfLimpo, id_genero, dtNascimentoMySQL, senha, email, id_unidade);
     
     return response.status(201).send({"message": "Morador cadastrado"})
 })
-route.put("/:id_morador", async (request, response)=>{
+route.put("/:id_unidade", async (request, response)=>{
 
-    const {nome, cpf, telefone, genero, dt_nascimento, apartamento ,bloco, senha, email, ramal} = request.body;
-    const {id_morador} = request.params;
+    const {nome, cpf, senha, data_nascimento, id_genero, email} = request.body;
+    const {id_unidade} = request.params;
     
-    if(!nome || !cpf || !telefone || !genero || !dt_nascimento || !apartamento || !bloco || !senha || !ramal){
+    if(!nome || !cpf || !senha || !id_genero || !data_nascimento || !id_unidade){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
     if (!vCpf(cpf)) {
@@ -49,21 +49,21 @@ route.put("/:id_morador", async (request, response)=>{
     if(senha.length < 8){
     return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
     }
-    await moradores.UpdateMorador(nome, cpf, telefone, genero, dt_nascimento, apartamento, bloco, senha, email, ramal, id_morador )
+    await moradores.UpdateMorador(nome, cpf, senha, id_genero, data_nascimento, email, id_unidade )
 
     return response.status(201).send({"message": "Morador atualizado com sucesso"})
 })
 
-route.delete("/:id_morador", async (request, response)=>{
-    const {id_morador} = request.params;
+route.delete("/:id_unidade", async (request, response)=>{
+    const {id_unidade} = request.params;
     
-    await moradores.DeleteMoradores(id_morador);
+    await moradores.DeleteMoradores(id_unidade);
     
     return response.status(200).send({"message":"Usuario excluido com sucesso"})
 }),
-route.get("/:id_morador", async (request, response) => {
-    const { id_morador } = request.params;
-    const morador = await moradores.getMoradorById(id_morador);
+route.get("/:id_unidade", async (request, response) => {
+    const { id_unidade } = request.params;
+    const morador = await moradores.getMoradorById(id_unidade);
     if (!morador) {
         return response.status(404).send({ message: "Morador não encontrado" });
     }

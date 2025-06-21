@@ -1,7 +1,7 @@
 import mysql from "../repository/mysql.js";
 
 async function listAcesso() {
-    const sql = "SELECT * FROM  nivelAcesso";
+    const sql = "SELECT * FROM  nivel_Acesso";
     let connect;
 
     try {

@@ -1,6 +1,6 @@
 import express, {request, response} from 'express';
 import prestadores from "../services/Ps-S.js";
-
+import { vCpf } from "../helpers/validacoes.js"
 const route = express.Router();
 
 
@@ -17,7 +17,7 @@ route.post("/", async (request, response) => {
     if(!nome || !cpf || !uf){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCPF(cpf)) {
+    if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
     
@@ -32,7 +32,7 @@ route.put("/:id_prestador_servico", async (request, response) => {
     if(!nome || !cpf || !uf){
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
-    if (!validarCPF(cpf)) {
+    if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
     

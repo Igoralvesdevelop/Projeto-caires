@@ -5,36 +5,39 @@ async function listEventos() {
 
     const connect = await mysql.bancoDados();
     const [rows] = await connect.query(sql);
-    connect.end();
+    await connect.end();
     return rows;
 }
 
-async function createEvento(cpf, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) {
-    const sql = 'INSERT INTO eventos(cpf, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+async function createEvento(cpf, fk_id_morador, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento) {
+    const sql = `
+        INSERT INTO eventos
+        (cpf, fk_id_morador, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-    const infoEvento = [cpf, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador];
-
-    console.log("Dados enviados para o banco:", infoEvento); // Log para depuração
+    const params = [cpf, fk_id_morador, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento];
 
     const connect = await mysql.bancoDados();
     try {
-        await connect.query(sql, infoEvento);
-    } catch (error) {
-        console.error("Erro ao inserir evento no banco:", error.message); // Log do erro
-        throw error; // Repassa o erro para o controlador
+        await connect.query(sql, params);
     } finally {
-        connect.end();
+        await connect.end();
     }
 }
 
-async function updateEvento(cpf, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador, id_evento) {
-    const sql = 'UPDATE eventos SET cpf = ?, titulo_evento = ?, descricao_evento = ?, tipo = ?, inicio_evento = ?, fim_evento = ?, cor = ?, status_pagamento = ?, fk_id_morador = ? WHERE id_evento = ?';
+async function updateEvento(cpf, fk_id_morador, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, id_evento) {
+    const sql = `
+        UPDATE eventos SET
+        cpf = ?, fk_id_morador = ?, titulo_evento = ?, descricao_evento = ?, tipo = ?, inicio_evento = ?, fim_evento = ?, cor = ?, status_pagamento = ?
+        WHERE id_evento = ?
+    `;
 
-    const infoEvento = [cpf, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, fk_id_morador, id_evento];
+    const params = [cpf, fk_id_morador, titulo_evento, descricao_evento, tipo, inicio_evento, fim_evento, cor, status_pagamento, id_evento];
 
     const connect = await mysql.bancoDados();
-    await connect.query(sql, infoEvento);
-    connect.end();
+    await connect.query(sql, params);
+    await connect.end();
 }
 
 async function deleteEvento(id_evento) {
@@ -42,15 +45,15 @@ async function deleteEvento(id_evento) {
 
     const connect = await mysql.bancoDados();
     await connect.query(sql, [id_evento]);
-    connect.end(); 
+    await connect.end();
 }
 
-async function verificarMorador(cpf, id_morador) { // Removido o campo email
+async function verificarMorador(cpf, id_morador) {
     const sql = 'SELECT * FROM moradores WHERE cpf = ? AND id_morador = ?';
 
     const connect = await mysql.bancoDados();
     const [rows] = await connect.query(sql, [cpf, id_morador]);
-    connect.end();
+    await connect.end();
     return rows.length > 0;
 }
 
