@@ -15,52 +15,75 @@ route.get("/", async (request, response) =>{
     }
     return response.status(200).send({"message":Morador})
 })
-route.post("/", async (request, response) =>{
-    const {nome, cpf, senha, data_nascimento, id_genero, email, id_unidade} = request.body;
-    if(!nome || !cpf || !senha || !data_nascimento || !id_genero || !email || !id_unidade){
+route.post("/", async (request, response) => {
+    const { nome, cpf, senha, data_nascimento, id_genero, email, id_unidade } = request.body;
+
+    // Verificar se todos os campos obrigatórios estão presentes
+    if (!nome || !cpf || !senha || !data_nascimento || !id_genero || !email || !id_unidade) {
+        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
+
+    // Validar CPF
+    if (!vCpf(cpf)) {
+        return response.status(400).send({ message: "CPF inválido" });
+    }
+
+    // Validar tamanho da senha
+    if (senha.length < 8) {
+        return response.status(400).send({ message: "A Senha Deve Possuir 8 Caracteres" });
+    }
+
+    try {
+        const cpfLimpo = cpf.replace(/\D/g, "");
+        const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
+
+        await moradores.CreateMorador(nome, cpfLimpo, senha, id_genero, dtNascimentoMySQL, email, id_unidade);
+
+        return response.status(201).send({ message: "Morador cadastrado" });
+    } catch (error) {
+        console.error("Erro ao criar morador:", error.message);
+        return response.status(500).send({ message: "Erro interno no servidor" });
+    }
+})
+route.put("/:id_unidade", async (request, response) => {
+    const { nome, cpf, senha, data_nascimento, id_genero, email } = request.body;
+    const { id_unidade } = request.params;
+
+    if (!nome || !cpf || !senha || !id_genero || !data_nascimento || !id_unidade) {
         return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
     }
     if (!vCpf(cpf)) {
         return response.status(400).send({ message: "CPF inválido" });
     }
-    
-    if(senha.length < 8){
-        return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
+    if (senha.length < 8) {
+        return response.status(400).send({ message: "A Senha Deve Possuir 8 Caracteres" });
     }
-    const cpfLimpo = cpf.replace(/\D/g, "");
-      
-    const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
-    await moradores.CreateMorador(nome, cpfLimpo, id_genero, dtNascimentoMySQL, senha, email, id_unidade);
-    
-    return response.status(201).send({"message": "Morador cadastrado"})
-})
-route.put("/:id_unidade", async (request, response)=>{
 
-    const {nome, cpf, senha, data_nascimento, id_genero, email} = request.body;
-    const {id_unidade} = request.params;
-    
-    if(!nome || !cpf || !senha || !id_genero || !data_nascimento || !id_unidade){
-        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
-    }
-    if (!vCpf(cpf)) {
-        return response.status(400).send({ message: "CPF inválido" });
-    }
-    
-    if(senha.length < 8){
-    return response.status(400).send({"message": "A Senha Deve Possuir 8 Caracteres"})
-    }
-    await moradores.UpdateMorador(nome, cpf, senha, id_genero, data_nascimento, email, id_unidade )
+    try {
+        const cpfLimpo = cpf.replace(/\D/g, "");
+        const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
 
-    return response.status(201).send({"message": "Morador atualizado com sucesso"})
-})
+        await moradores.UpdateMorador(nome, cpfLimpo, senha, id_genero, dtNascimentoMySQL, email, id_unidade);
 
-route.delete("/:id_unidade", async (request, response)=>{
-    const {id_unidade} = request.params;
-    
-    await moradores.DeleteMoradores(id_unidade);
-    
-    return response.status(200).send({"message":"Usuario excluido com sucesso"})
-}),
+        return response.status(200).send({ message: "Morador atualizado com sucesso" });
+    } catch (error) {
+        console.error("Erro ao atualizar morador:", error.message);
+        return response.status(500).send({ message: "Erro interno no servidor" });
+    }
+});
+
+route.delete("/:id_unidade", async (request, response) => {
+    const { id_unidade } = request.params;
+
+    try {
+        await moradores.Deletemorador(id_unidade);
+        return response.status(200).send({ message: "Usuário excluído com sucesso" });
+    } catch (error) {
+        console.error("Erro ao excluir morador:", error.message);
+        return response.status(500).send({ message: "Erro interno no servidor" });
+    }
+});
+
 route.get("/:id_unidade", async (request, response) => {
     const { id_unidade } = request.params;
     const morador = await moradores.getMoradorById(id_unidade);

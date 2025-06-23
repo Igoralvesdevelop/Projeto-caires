@@ -52,12 +52,12 @@ CREATE TABLE usuarios (
     senha VARCHAR(60) NOT NULL,
     data_nascimento DATE,
     id_genero INT NOT NULL,
+    nivel_acesso varchar(30) not null,
     deletado BOOLEAN DEFAULT FALSE,
     id_condominio BIGINT NOT NULL,
     id_nivel INT NOT NULL,
     FOREIGN KEY (id_genero) REFERENCES genero(id_genero),
-    FOREIGN KEY (id_condominio) REFERENCES condominio(id_condominio) ON DELETE CASCADE,
-    FOREIGN KEY (id_nivel) REFERENCES nivel_acesso(id_nivel)
+    FOREIGN KEY (id_condominio) REFERENCES condominio(id_condominio) ON DELETE CASCADE
 );
 
 CREATE TABLE proprietario (
@@ -73,7 +73,7 @@ CREATE TABLE proprietario (
 );
 CREATE TABLE proprietario_unidade_assoc (
     id_proprietario INT,
-    id_unidade VARCHAR(10),
+    id_unidade VARCHAR(10)unique,
     status_ocupacao ENUM('proprietario','morador','alugado') NOT NULL,
     PRIMARY KEY (id_proprietario, id_unidade),
     FOREIGN KEY (id_proprietario) REFERENCES proprietario(id_proprietario) ON DELETE CASCADE,
@@ -101,14 +101,9 @@ CREATE TABLE visitantes (
     nivel_acesso ENUM('Visitante Comum','Visitante Permanente','Prestador de Serviço') NOT NULL,
     deletado BOOLEAN DEFAULT FALSE,
     permissao ENUM('permitido','negado') DEFAULT 'permitido',
-    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_saida DATETIME,
+    motivo varchar(50)default"",
     id_genero INT NOT NULL,
-    id_estado INT,
-    id_unidade VARCHAR(10),
-    FOREIGN KEY (id_genero) REFERENCES genero(id_genero),
-    FOREIGN KEY (id_estado) REFERENCES estados(id),
-    FOREIGN KEY (id_unidade) REFERENCES unidades_residenciais(id_unidade) ON DELETE SET NULL
+    FOREIGN KEY (id_genero) REFERENCES genero(id_genero)
 );
 
 CREATE TABLE morador_visitante_assoc (
@@ -229,3 +224,57 @@ INSERT INTO cores (descricao) VALUES
 INSERT INTO areas_comuns (nome, descricao) VALUES
   ('Churrasqueira','Espaço com churrasqueira, geladeira e pia.'),
   ('Salão de Festas','Salão coberto com mesas, cadeiras e som.');
+  -- Inserindo condomínios
+INSERT INTO condominio (nome, numero_bloco, numero_unidades, ramal, cep, endereco, cnpj) VALUES
+('Residencial São José', 3, 36, '101, 102', '08000-000', 'Rua das Flores, 123', '12345678000190'),
+('Condomínio Primavera', 2, 24, '201', '08001-111', 'Av. Primavera, 456', '09876543000109');
+
+-- Inserindo unidades residenciais
+INSERT INTO unidades_residenciais (id_unidade, id_condominio, bloco, andar, apartamento) VALUES
+('SJ-A-01', 1, 'A', '01', '01'),
+('SJ-A-02', 1, 'A', '01', '02'),
+('SJ-B-01', 1, 'B', '02', '01'),
+('PR-1-101', 2, '1', '01', '01'),
+('PR-1-102', 2, '1', '01', '02');
+
+-- Inserindo usuários
+INSERT INTO usuarios (nome, email, cpf, senha, data_nascimento, id_genero,nivel_acesso, id_condominio, id_nivel) VALUES
+('Alice Silva', 'alice@exemplo.com', '111.111.111-11', 'senha123', '1990-05-15', 2,'Porteiro', 1, 5),
+('Bruno Costa', 'bruno@exemplo.com', '222.222.222-22', 'senha123', '1985-07-20', 1,'Sindico' ,2, 3);
+
+-- Inserindo proprietários
+INSERT INTO proprietario (nome, cpf, senha, data_nascimento, id_genero, email) VALUES
+('Carlos Pereira', '333.333.333-33', 'senha123', '1970-01-10', 1, 'carlos@exemplo.com'),
+('Daniela Souza', '444.444.444-44', 'senha123', '1975-03-25', 2, 'daniela@exemplo.com');
+
+-- Inserindo moradores
+INSERT INTO morador (nome, cpf, senha, data_nascimento, id_genero, email, id_unidade) VALUES
+('Eduardo Lima', '555.555.555-55', 'senha123', '1992-11-30', 1, 'eduardo@exemplo.com', 'SJ-A-01'),
+('Fernanda Rocha', '666.666.666-66', 'senha123', '1994-08-05', 2, 'fernanda@exemplo.com', 'PR-1-101');
+
+-- Inserindo visitantes
+INSERT INTO visitantes (nome, cpf, rg, nivel_acesso, permissao, id_genero ) VALUES
+('Gustavo Alves', '777.777.777-77', 'MG1234567', 'Visitante Comum', 'permitido', 1 ),
+('Helena Ramos', '888.888.888-88', 'SP7654321', 'Prestador de Serviço', 'permitido', 2);
+
+-- Inserindo contatos
+INSERT INTO contatos (entidade_tipo, entidade_id, tipo, valor) VALUES
+('usuario', 1, 'telefone', '(11)99999-0001'),
+('usuario', 2, 'email', 'bruno.contato@exemplo.com'),
+('proprietario', 1, 'telefone', '(11)88888-0001'),
+('proprietario', 2, 'email', 'daniela.contato@exemplo.com');
+
+-- Inserindo veículos
+INSERT INTO veiculos (modelo, placa, tipo_veiculo, vaga, id_cor, id_unidade) VALUES
+('Honda Civic', 'ABC1234', 'Carro', 'Vaga 01', 3, 'SJ-A-01'),
+('Fiat Uno', 'XYZ5678', 'Carro', 'Vaga 02', 1, 'PR-1-101');
+
+-- Inserindo encomendas
+INSERT INTO encomendas (empresa, data_entrega, status_entrega, imagem, id_unidade) VALUES
+('Correios', '2025-06-18 14:30:00', 'entregue', 'foto1.jpg', 'SJ-A-02'),
+('FedEx', '2025-06-19 09:15:00', 'entregue', 'foto2.jpg', 'PR-1-102');
+
+-- Inserindo eventos em áreas comuns
+INSERT INTO eventos (id_unidade, id_area, data_reserva, hora_inicio, hora_fim, status, observacoes) VALUES
+('SJ-A-01', 1, '2025-07-10', '18:00:00', '21:00:00', 'confirmada', 'Aniversário'),
+('PR-1-101', 2, '2025-07-15', '10:00:00', '13:00:00', 'confirmada', 'Reunião condomínio');

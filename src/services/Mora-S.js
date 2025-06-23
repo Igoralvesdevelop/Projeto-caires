@@ -1,7 +1,7 @@
 import mysql from "../repository/mysql.js";
 
 async function listMorador() {
-    const sql = "SELECT * FROM moradores WHERE deletado = 0";
+    const sql = "SELECT * FROM morador WHERE deletado = 0";
     let connect;
 
     try {
@@ -9,7 +9,7 @@ async function listMorador() {
         const [rows] = await connect.query(sql);
         return rows;
     } catch (err) {
-        console.error("Erro ao listar moradores:", err.message);
+        console.error("Erro ao listar morador:", err.message);
         throw new Error("Erro ao acessar o banco de dados.");
     } finally {
         if (connect) connect.end(); 
@@ -20,8 +20,8 @@ async function CreateMorador(nome, cpf, senha, id_genero, data_nascimento, email
     const id_morador = Math.floor(100000 + Math.random() * 900000);
 
     const sql =
-        "INSERT INTO moradores(id_morador, nome, cpf, id_genero, data_nascimento, email, id_unidade) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const infoMorador = [id_morador,nome, cpf, senha, id_genero, data_nascimento, email, id_unidade];
+        "INSERT INTO morador(id_morador, nome, cpf, senha, id_genero, data_nascimento, email, id_unidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const infoMorador = [id_morador, nome, cpf, senha, id_genero, data_nascimento, email, id_unidade];
     let connect;
 
     try {
@@ -41,9 +41,9 @@ async function CreateMorador(nome, cpf, senha, id_genero, data_nascimento, email
     }
 }
 
-async function UpdateMorador(nome, cpf, id_genero, data_nascimento, email, id_morador) {
+async function UpdateMorador(nome, cpf, id_genero, data_nascimento, email, id_morador, senha) {
     const sql =
-        "UPDATE moradores SET nome = ?, cpf = ?,= ?, senha = ?, id_genero = ?, data_nascimento = ?, email = ?, id_unidade = ? WHERE id_morador = ?";
+        "UPDATE morador SET nome = ?, cpf = ?, senha = ?, id_genero = ?, data_nascimento = ?, email = ?, id_unidade = ? WHERE id_morador = ?";
     const infoMorador = [nome, cpf, senha, id_genero, data_nascimento, email, id_unidade, id_morador];
     let connect;
 
@@ -62,8 +62,8 @@ async function UpdateMorador(nome, cpf, id_genero, data_nascimento, email, id_mo
     }
 }
 
-async function DeleteMoradores(id_morador) {
-    const sql = "UPDATE moradores SET deletado = 1 WHERE id_morador = ?";
+async function Deletemorador(id_morador) {
+    const sql = "UPDATE morador SET deletado = 1 WHERE id_morador = ?";
     let connect;
 
     try {
@@ -82,11 +82,11 @@ async function DeleteMoradores(id_morador) {
 }
 
 async function getMoradorById(id_morador) {
-    const sql = "SELECT * FROM moradores WHERE id_morador = ?";
+    const sql = "SELECT * FROM morador WHERE id_morador = ?";
     const connect = await mysql.bancoDados();
     const [rows] = await connect.query(sql, [id_morador]);
     connect.end;
     return rows[0];
 }
 
-export default { CreateMorador, UpdateMorador, DeleteMoradores, listMorador, getMoradorById };
+export default { CreateMorador, UpdateMorador, Deletemorador, listMorador, getMoradorById };

@@ -10,7 +10,7 @@ async function ListAssociacaoVisitantes() {
 }
 
 async function createAssociacaoVisitante(id_visitante, id_unidade) {
-    const sql = 'INSERT INTO  morador_visitante_assoc(id_visitante, id_unidade) VALUES (?, ?,)';
+    const sql = 'INSERT INTO  morador_visitante_assoc(id_visitante, id_unidade) VALUES (?, ?)';
 
     const info = [id_visitante, id_unidade];
 
