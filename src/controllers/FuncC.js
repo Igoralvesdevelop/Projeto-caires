@@ -26,28 +26,24 @@ route.get("/", async (request, response) => {
 
 // Endpoint para criar um funcionário
 route.post("/", async (request, response) => {
-    const {nome, cpf, data_nascimento, id_genero, nivel_acesso,  id_condominio} = request.body;
-
+    const { nome, cpf, senha, data_nascimento, id_genero, nivel_acesso, id_condominio, id_nivel } = request.body;
     try {
-        if (!nome || !cpf || !data_nascimento || !id_genero || !nivel_acesso || !id_condominio) {
+        if (!nome || !cpf || !senha || !data_nascimento || !id_genero || !nivel_acesso || !id_condominio || !id_nivel) {
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos." });
         }
         if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido." });
         }
-    
-
-        // Remove formatações de CPF, CNPJ e converte a data de nascimento para o formato MySQL
+        if (senha.length < 8) {
+            return response.status(400).send({ message: "A senha deve ter pelo menos 8 caracteres." });
+        }
         const cpfLimpo = cpf.replace(/\D/g, "");
-      
         const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
-
-        await funcionario.CreateUsuario(nome, cpfLimpo,  dtNascimentoMySQL, id_genero, nivel_acesso, id_condominio);
-
+        await funcionario.CreateUsuario(nome, cpfLimpo, senha, dtNascimentoMySQL, id_genero, nivel_acesso, id_condominio, id_nivel);
         return response.status(201).send({ message: "Funcionário cadastrado com sucesso!" });
     } catch (error) {
         console.error("Erro ao cadastrar funcionário:", error);
-        return response.status(500).send({ error: "Erro ao cadastrar funcionário. Verifique os dados e tente novamente." });
+        return response.status(500).send({ error: "Erro ao cadastrar funcionário.", detalhe: error.message });
     }
 });
 
@@ -55,23 +51,16 @@ route.post("/", async (request, response) => {
 route.put("/:id_usuario", async (request, response) => {
     const { nome, email, cpf, data_nascimento, id_genero, nivel_acesso, id_condominio } = request.body;
     const { id_usuario } = request.params;
-
     try {
-        if (!nome || !email || !cpf ||!data_nascimento || !id_genero || !nivel_acesso || !id_condominio) {
+        if (!nome || !email || !cpf || !data_nascimento || !id_genero || !nivel_acesso || !id_condominio) {
             return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos." });
         }
         if (!vCpf(cpf)) {
             return response.status(400).send({ message: "CPF inválido." });
         }
-  
-
-        // Remove formatações de CPF, CNPJ e data de nascimento
         const cpfLimpo = cpf.replace(/\D/g, "");
- 
-        const dtNascimentoLimpo = data_nascimento.replace(/\D/g, "");
-
-        await funcionario.UpdateUsuario(nome, email, cpfLimpo, dtNascimentoLimpo, id_genero, nivel_acesso, id_condominio, id_usuario);
-
+        const dtNascimentoMySQL = formatarDataParaMySQL(data_nascimento);
+        await funcionario.UpdateUsuario(nome, email, cpfLimpo, dtNascimentoMySQL, id_genero, nivel_acesso, id_condominio, id_usuario);
         return response.status(200).send({ message: "Funcionário atualizado com sucesso!" });
     } catch (error) {
         console.error("Erro ao atualizar funcionário:", error);

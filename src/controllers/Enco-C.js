@@ -19,57 +19,89 @@ const upload = multer({ storage: storage });
 
 // Cadastrar encomenda
 route.post("/", upload.single("imagem"), async (request, response) => {
-    const { empresa, id_unidade, status_entrega, data_entrega } = request.body;
+    const { empresa, id_unidade} = request.body;
+    const { status_entrega, data_entrega } = "entregue"
     const imagem = request.file ? request.file.filename : null;
 
-    if (!empresa || !id_unidade || !status_entrega) {
-        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    if (!empresa || !id_unidade) {
+        return response.status(400).send({ message: "Empresa e id_unidade são obrigatórios" });
     }
 
-    await encomendas.createEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega || null);
-
-    return response.status(201).send({ message: "Encomenda cadastrada com sucesso" });
+    try {
+        await encomendas.createEncomenda(
+            empresa,
+            id_unidade,
+            status_entrega,
+            imagem,
+            data_entrega
+        );
+        return response.status(201).send({ message: "Encomenda cadastrada com sucesso" });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao cadastrar encomenda", error: error.message });
+    }
 });
 
 // Listar todas as encomendas
 route.get("/", async (request, response) => {
-    const lista = await encomendas.listEncomendas();
-    if (lista.length < 1) {
-        return response.status(204).end();
+    try {
+        const lista = await encomendas.listEncomendas();
+        if (lista.length < 1) {
+            return response.status(204).end();
+        }
+        return response.status(200).send({ message: lista });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao listar encomendas", error: error.message });
     }
-    return response.status(200).send({ message: lista });
 });
 
 // Buscar encomenda por ID
 route.get("/:id_encomenda", async (request, response) => {
     const { id_encomenda } = request.params;
-    const encomenda = await encomendas.getEncomendaById(id_encomenda);
-    if (!encomenda) {
-        return response.status(404).send({ message: "Encomenda não encontrada" });
+    try {
+        const encomenda = await encomendas.getEncomendaById(id_encomenda);
+        if (!encomenda) {
+            return response.status(404).send({ message: "Encomenda não encontrada" });
+        }
+        return response.status(200).send({ message: encomenda });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao buscar encomenda", error: error.message });
     }
-    return response.status(200).send({ message: encomenda });
 });
 
 // Atualizar encomenda
 route.put("/:id_encomenda", upload.single("imagem"), async (request, response) => {
     const { empresa, id_unidade, status_entrega, data_entrega } = request.body;
     const { id_encomenda } = request.params;
-    const imagem = request.file ? request.file.filename : null;
+    const imagem = request.file ? request.file.filename : undefined;
 
-    if (!empresa || !id_unidade || !status_entrega) {
-        return response.status(400).send({ message: "Todos os campos obrigatórios devem ser preenchidos" });
+    if (!empresa || !id_unidade) {
+        return response.status(400).send({ message: "Empresa e id_unidade são obrigatórios" });
     }
 
-    await encomendas.updateEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega || null, id_encomenda);
-
-    return response.status(200).send({ message: "Encomenda atualizada com sucesso" });
+    try {
+        await encomendas.updateEncomenda(
+            empresa,
+            id_unidade,
+            status_entrega,
+            imagem,
+            data_entrega,
+            id_encomenda
+        );
+        return response.status(200).send({ message: "Encomenda atualizada com sucesso" });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao atualizar encomenda", error: error.message });
+    }
 });
 
 // Deletar encomenda
 route.delete("/:id_encomenda", async (request, response) => {
     const { id_encomenda } = request.params;
-    await encomendas.deleteEncomenda(id_encomenda);
-    return response.status(200).send({ message: "Encomenda excluída com sucesso" });
+    try {
+        await encomendas.deleteEncomenda(id_encomenda);
+        return response.status(200).send({ message: "Encomenda excluída com sucesso" });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao excluir encomenda", error: error.message });
+    }
 });
 
 export default route;

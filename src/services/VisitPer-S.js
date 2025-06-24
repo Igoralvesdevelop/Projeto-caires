@@ -9,10 +9,10 @@ async function listVisitantes() {
     return rows;
 }
 
-async function createVisitante(nome, cpf, rg, nivel_acesso, permissao, id_genero) {
-    const sql = 'INSERT INTO visitantes(nome, cpf, rg, nivel_acesso, permissao, id_genero) VALUES (?, ?, ?, ?, ?, ?)';
+async function createVisitante(nome, cpf, rg, nivel_acesso, permissao, id_genero, imagem) {
+    const sql = 'INSERT INTO visitantes(nome, cpf, rg, nivel_acesso, permissao, id_genero, imagem) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-    const infoVisitante = [nome, cpf, rg, nivel_acesso, permissao, id_genero];
+    const infoVisitante = [nome, cpf, rg, nivel_acesso, permissao, id_genero, imagem];
 
     const connect = await mysql.bancoDados();
     const [result] = await connect.query(sql, infoVisitante);

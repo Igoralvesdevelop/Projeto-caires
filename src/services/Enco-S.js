@@ -2,7 +2,6 @@ import mysql from "../repository/mysql.js";
 
 async function listEncomendas() {
     const sql = "SELECT * FROM encomendas";
-
     const connect = await mysql.bancoDados();
     const [rows] = await connect.query(sql);
     await connect.end();
@@ -11,57 +10,83 @@ async function listEncomendas() {
 
 async function getEncomendaById(id_encomenda) {
     const sql = "SELECT * FROM encomendas WHERE id_encomenda = ?";
-
     const connect = await mysql.bancoDados();
     const [rows] = await connect.query(sql, [id_encomenda]);
     await connect.end();
-    return rows[0]; // Retorna o primeiro registro ou undefined
+    return rows[0];
 }
 
-async function createEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega = null) {
+async function createEncomenda(empresa, id_unidade, status_entrega = undefined, imagem = null, ) {
+    // Monta dinamicamente os campos e valores para respeitar os defaults do banco
+    let campos = ['empresa', 'id_unidade'];
+    let valores = [empresa, id_unidade];
+    let placeholders = ['?', '?'];
+
+    if (typeof status_entrega !== 'undefined') {
+        campos.push('status_entrega');
+        valores.push(status_entrega);
+        placeholders.push('?');
+    }
+    if (imagem !== null) {
+        campos.push('imagem');
+        valores.push(imagem);
+        placeholders.push('?');
+    }
+  
     const sql = `
-        INSERT INTO encomendas (empresa, id_unidade, status_entrega, imagem, data_entrega)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO encomendas (${campos.join(', ')})
+        VALUES (${placeholders.join(', ')})
     `;
 
-    const params = [empresa, id_unidade, status_entrega, imagem, data_entrega];
-
     const connect = await mysql.bancoDados();
-    const [result] = await connect.query(sql, params);
+    const [result] = await connect.query(sql, valores);
     await connect.end();
 
     return { id_encomenda: result.insertId };
 }
 
-async function updateEncomenda(empresa, id_unidade, status_entrega, imagem, data_entrega = null, id_encomenda) {
-    // Se imagem for null, não atualiza a imagem
-    let sql;
-    let params;
+async function updateEncomenda(empresa, id_unidade, status_entrega = undefined, imagem = undefined, data_entrega = undefined, id_encomenda) {
+    // Monta dinamicamente os campos a serem atualizados
+    let sets = [];
+    let valores = [];
 
-    if (imagem) {
-        sql = `
-            UPDATE encomendas
-            SET empresa = ?, id_unidade = ?, status_entrega = ?, imagem = ?, data_entrega = ?
-            WHERE id_encomenda = ?
-        `;
-        params = [empresa, id_unidade, status_entrega, imagem, data_entrega, id_encomenda];
-    } else {
-        sql = `
-            UPDATE encomendas
-            SET empresa = ?, id_unidade = ?, status_entrega = ?, data_entrega = ?
-            WHERE id_encomenda = ?
-        `;
-        params = [empresa, id_unidade, status_entrega, data_entrega, id_encomenda];
+    if (typeof empresa !== 'undefined') {
+        sets.push('empresa = ?');
+        valores.push(empresa);
+    }
+    if (typeof id_unidade !== 'undefined') {
+        sets.push('id_unidade = ?');
+        valores.push(id_unidade);
+    }
+    if (typeof status_entrega !== 'undefined') {
+        sets.push('status_entrega = ?');
+        valores.push(status_entrega);
+    }
+    if (typeof imagem !== 'undefined') {
+        sets.push('imagem = ?');
+        valores.push(imagem);
+    }
+    if (typeof data_entrega !== 'undefined') {
+        sets.push('data_entrega = ?');
+        valores.push(data_entrega);
     }
 
+    if (sets.length === 0) return; // Nada para atualizar
+
+    const sql = `
+        UPDATE encomendas
+        SET ${sets.join(', ')}
+        WHERE id_encomenda = ?
+    `;
+    valores.push(id_encomenda);
+
     const connect = await mysql.bancoDados();
-    await connect.query(sql, params);
+    await connect.query(sql, valores);
     await connect.end();
 }
 
 async function deleteEncomenda(id_encomenda) {
     const sql = 'DELETE FROM encomendas WHERE id_encomenda = ?';
-
     const connect = await mysql.bancoDados();
     await connect.query(sql, [id_encomenda]);
     await connect.end();

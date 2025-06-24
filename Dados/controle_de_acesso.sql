@@ -102,6 +102,7 @@ CREATE TABLE visitantes (
     deletado BOOLEAN DEFAULT FALSE,
     permissao ENUM('permitido','negado') DEFAULT 'permitido',
     motivo varchar(50)default"",
+	imagem VARCHAR(255),
     id_genero INT NOT NULL,
     FOREIGN KEY (id_genero) REFERENCES genero(id_genero)
 );
@@ -270,9 +271,6 @@ INSERT INTO veiculos (modelo, placa, tipo_veiculo, vaga, id_cor, id_unidade) VAL
 ('Fiat Uno', 'XYZ5678', 'Carro', 'Vaga 02', 1, 'PR-1-101');
 
 -- Inserindo encomendas
-INSERT INTO encomendas (empresa, data_entrega, status_entrega, imagem, id_unidade) VALUES
-('Correios', '2025-06-18 14:30:00', 'entregue', 'foto1.jpg', 'SJ-A-02'),
-('FedEx', '2025-06-19 09:15:00', 'entregue', 'foto2.jpg', 'PR-1-102');
 
 -- Inserindo eventos em áreas comuns
 INSERT INTO eventos (id_unidade, id_area, data_reserva, hora_inicio, hora_fim, status, observacoes) VALUES
