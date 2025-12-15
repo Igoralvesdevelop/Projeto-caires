@@ -14,13 +14,17 @@ import NivelAcessoController from "./controllers/NivelAcessoC.js";
 import PropietarioController from "./controllers/Propri-C.js";
 import residenciaController from "./controllers/Res-C.js";
 import PropietarioAssController from "./controllers/Proprietario_asso-C.js";
+import areasController from "./controllers/Areas-C.js";
+import comunicaController from "./controllers/comunicados.js";
 import { verifyJWT } from "./middlewares/jwt.js";
 
 //Variável de rotas
 const routes = express();
 
 //Conectar URL com Controllers
+routes.use('/comunicados', comunicaController);
 routes.use('/proprietario', PropietarioController);
+routes.use('/areas', areasController);
 routes.use('/residencia', residenciaController);
 routes.use('/funcionario', funcionarioController);
 routes.use('/nivelAcesso', NivelAcessoController);

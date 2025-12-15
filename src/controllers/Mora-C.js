@@ -92,5 +92,18 @@ route.get("/:id_unidade", async (request, response) => {
     }
     return response.status(200).send({ message: morador });''
 });
+route.get("/:id_morador", async (request, response) => {
+    const { id_visitante } = request.params;
+
+    try {
+        const visitante = await visitantes.getVisitanteById(id_visitante);
+        if (!visitante) {
+            return response.status(404).send({ message: "Visitante não encontrado" });
+        }
+        return response.status(200).send({ message: visitante });
+    } catch (error) {
+        return response.status(500).send({ message: "Erro ao buscar visitante", error: error.message });
+    }
+});
 
 export default route;

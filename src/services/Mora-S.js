@@ -16,12 +16,12 @@ async function listMorador() {
     }
 }
 
-async function CreateMorador(nome, cpf, senha, id_genero, data_nascimento, email, id_unidade) {
+async function CreateMorador(nome, cpf, senha, id_genero, data_nascimento, email, telefone, id_unidade) {
     const id_morador = Math.floor(100000 + Math.random() * 900000);
 
     const sql =
-        "INSERT INTO morador(id_morador, nome, cpf, senha, id_genero, data_nascimento, email, id_unidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const infoMorador = [id_morador, nome, cpf, senha, id_genero, data_nascimento, email, id_unidade];
+        "INSERT INTO morador(id_morador, nome, cpf, senha, id_genero, data_nascimento, email, telefone, id_unidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const infoMorador = [id_morador, nome, cpf, senha, id_genero, data_nascimento, email, telefone, id_unidade];
     let connect;
 
     try {
